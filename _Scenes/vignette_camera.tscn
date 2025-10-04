@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://cmn3inbpo7no1"]
+
+[ext_resource type="Shader" uid="uid://5wv06hu2431b" path="res://Shaders/vignette.gdshader" id="1_5cgjh"]
+[ext_resource type="Script" uid="uid://cpvppg4g8atd" path="res://_Scenes/vignette_camera.gd" id="1_16y6g"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8q7c6"]
+shader = ExtResource("1_5cgjh")
+shader_parameter/radius = 1.0
+shader_parameter/softness = 0.245
+shader_parameter/intensity = 1.0
+shader_parameter/contrast = 1.374
+shader_parameter/radiality = 1.0
+shader_parameter/vignette_color = Color(0, 0, 0, 1)
+
+[node name="Vignette Camera" type="Node2D" node_paths=PackedStringArray("vignette")]
+script = ExtResource("1_16y6g")
+vignette = NodePath("Camera2D/CanvasLayer/ColorRect")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(240, 321)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
+layer = 0
+
+[node name="ColorRect" type="ColorRect" parent="Camera2D/CanvasLayer"]
+material = SubResource("ShaderMaterial_8q7c6")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
