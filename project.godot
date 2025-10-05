@@ -24,6 +24,7 @@ PlayerVariables="*res://player_variables.gd"
 window/size/viewport_width=480
 window/size/viewport_height=640
 window/stretch/mode="viewport"
+DialogueGlobal="*res://dialogue_global.gd"
 
 [editor]
 
