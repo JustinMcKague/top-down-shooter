@@ -11,3 +11,12 @@ func _ready() -> void:
 func update_battery_display():
 	current_size = original_size * (PlayerVariables.batteryCharge / 100.0)
 	self.size.y = current_size
+
+
+func _on_timer_timeout() -> void:
+	PlayerVariables.batteryCharge -= 3
+	update_battery_display()
+
+
+func _on_tsting_timeout() -> void: # WHEN THE PLAYER PICKS UP A BATTERY, SIGNAL THIS FUNCTION
+	PlayerVariables.batteryCharge += 25
