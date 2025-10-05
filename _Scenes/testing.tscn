@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://t1nlnhr7w0o3"]
+
+[ext_resource type="PackedScene" uid="uid://woskgqk1wj3j" path="res://_Scenes/battery_display.tscn" id="1_6nac7"]
+[ext_resource type="PackedScene" uid="uid://cmn3inbpo7no1" path="res://_Scenes/vignette_camera.tscn" id="2_6fw42"]
+
+[node name="Root" type="Node2D"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Battery Display" parent="Control" instance=ExtResource("1_6nac7")]
+z_index = 10
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 1
+
+[node name="Vignette Camera" parent="." instance=ExtResource("2_6fw42")]
