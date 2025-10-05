@@ -32,11 +32,17 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = -5.0
-offset_bottom = -5.0
+offset_left = 36.0
+offset_top = 69.0
+offset_right = 26.0
+offset_bottom = 59.0
 grow_horizontal = 2
 grow_vertical = 2
+rotation = 3.14159
 color = Color(0, 0.702023, 0.219448, 1)
 script = ExtResource("1_0ccb5")
+
+[node name="Timer" type="Timer" parent="CanvasLayer/TextureRect/ColorRect"]
+autostart = true
+
+[connection signal="timeout" from="CanvasLayer/TextureRect/ColorRect/Timer" to="CanvasLayer/TextureRect/ColorRect" method="_on_timer_timeout"]
