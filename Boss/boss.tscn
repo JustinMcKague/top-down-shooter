@@ -82,13 +82,13 @@ laser_emitters = [NodePath("Center Laser Emitter"), NodePath("Right Laser Emitte
 laser = ExtResource("6_mk3vo")
 
 [node name="Center Laser Emitter" type="Node2D" parent="Laser Beam"]
-position = Vector2(1, 90)
+position = Vector2(3, 90)
 
 [node name="Right Laser Emitter" type="Node2D" parent="Laser Beam"]
-position = Vector2(215, -60)
+position = Vector2(216, -62)
 
 [node name="Left Laser Emitter" type="Node2D" parent="Laser Beam"]
-position = Vector2(-209, -59)
+position = Vector2(-209, -62)
 
 [node name="Delay" type="Timer" parent="Laser Beam"]
 wait_time = 2.0

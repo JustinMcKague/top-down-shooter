@@ -1,88 +1,60 @@
-[gd_scene load_steps=16 format=3 uid="uid://coas4vpmfcaqr"]
+[gd_scene load_steps=11 format=3 uid="uid://coas4vpmfcaqr"]
 
 [ext_resource type="Script" uid="uid://xkoek42dvitj" path="res://Boss/Boss Attacks/Laser/boss_laser.gd" id="1_e5gvd"]
 [ext_resource type="Texture2D" uid="uid://c1mq5gkile05a" path="res://Boss/Boss Attacks/Laser/ProjectilesBoss_laserBeam-Sheet.png" id="2_fhoex"]
-[ext_resource type="Texture2D" uid="uid://cdvgguwmqvv8c" path="res://Boss/Boss Attacks/Laser/ProjectilesBoss_laserBall-Sheet.png" id="3_57lhk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xll6h"]
+size = Vector2(110, 641)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86wd3"]
+atlas = ExtResource("2_fhoex")
+region = Rect2(448, 0, 112, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e5gvd"]
+atlas = ExtResource("2_fhoex")
+region = Rect2(560, 0, 112, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fhoex"]
+atlas = ExtResource("2_fhoex")
+region = Rect2(0, 0, 112, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_57lhk"]
+atlas = ExtResource("2_fhoex")
+region = Rect2(112, 0, 112, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xll6h"]
+atlas = ExtResource("2_fhoex")
+region = Rect2(224, 0, 112, 640)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wteam"]
 atlas = ExtResource("2_fhoex")
-region = Rect2(0, 0, 38, 6)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4tswf"]
-atlas = ExtResource("3_57lhk")
-region = Rect2(0, 0, 31, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_imaep"]
-atlas = ExtResource("3_57lhk")
-region = Rect2(31, 0, 31, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1hmfp"]
-atlas = ExtResource("3_57lhk")
-region = Rect2(62, 0, 31, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ed7ta"]
-atlas = ExtResource("3_57lhk")
-region = Rect2(93, 0, 31, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jpgf4"]
-atlas = ExtResource("3_57lhk")
-region = Rect2(124, 0, 31, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sdvbh"]
-atlas = ExtResource("3_57lhk")
-region = Rect2(155, 0, 31, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qfsh3"]
-atlas = ExtResource("3_57lhk")
-region = Rect2(186, 0, 31, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_83862"]
-atlas = ExtResource("3_57lhk")
-region = Rect2(217, 0, 31, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_algqa"]
-atlas = ExtResource("3_57lhk")
-region = Rect2(248, 0, 31, 20)
+region = Rect2(336, 0, 112, 640)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_slmmi"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wteam")
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_86wd3")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_e5gvd")
 }],
 "loop": false,
 "name": &"laser",
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4tswf")
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_fhoex")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_57lhk")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_imaep")
+"texture": SubResource("AtlasTexture_xll6h")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_1hmfp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ed7ta")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jpgf4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sdvbh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qfsh3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_83862")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_algqa")
+"texture": SubResource("AtlasTexture_wteam")
 }],
 "loop": false,
 "name": &"warming",
@@ -90,11 +62,13 @@ animations = [{
 }]
 
 [node name="Boss_Laser" type="Node2D" groups=["enemy_bullet"]]
+position = Vector2(0, 320)
 script = ExtResource("1_e5gvd")
 
 [node name="HitBox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(-1, 1.5)
 shape = SubResource("RectangleShape2D_xll6h")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
