@@ -2,10 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://ceepyp48rfoas" path="res://Game_Asets/Boss-Sheet.webp" id="1_2mdct"]
 [ext_resource type="Script" uid="uid://ckww1cciujee4" path="res://Boss/boss.gd" id="1_7ba5a"]
-[ext_resource type="Script" uid="uid://83ecr14pxmg2" path="res://Boss/projectile_spray.gd" id="2_mrrbl"]
-[ext_resource type="Script" uid="uid://djeibfyhiwtb2" path="res://Boss/laser_beam.gd" id="3_0sshd"]
+[ext_resource type="Script" uid="uid://83ecr14pxmg2" path="res://Boss/Boss Attacks/Spray/projectile_spray.gd" id="2_mrrbl"]
+[ext_resource type="Script" uid="uid://djeibfyhiwtb2" path="res://Boss/Boss Attacks/Laser/laser_beam.gd" id="3_0sshd"]
 [ext_resource type="PackedScene" uid="uid://de8e4k1ajflmy" path="res://Boss/Boss Attacks/Spray/spray_projectile.tscn" id="3_7ba5a"]
-[ext_resource type="Script" uid="uid://bteggfjmwn30e" path="res://Boss/wave_emitter.gd" id="4_7ba5a"]
+[ext_resource type="Script" uid="uid://bteggfjmwn30e" path="res://Boss/Boss Attacks/Wave/wave_emitter.gd" id="4_7ba5a"]
 [ext_resource type="PackedScene" uid="uid://coas4vpmfcaqr" path="res://Boss/Boss Attacks/Laser/boss_laser.tscn" id="6_mk3vo"]
 [ext_resource type="PackedScene" uid="uid://cbjdi8dhp04vn" path="res://Boss/Boss Attacks/Wave/missile.tscn" id="8_ju3tf"]
 
@@ -45,7 +45,6 @@ script = ExtResource("1_7ba5a")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2(-1, -146)
-scale = Vector2(1, 1)
 shape = SubResource("CircleShape2D_2mdct")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

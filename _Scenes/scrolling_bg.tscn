@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7rj4ow551qxe"]
+
+[ext_resource type="Shader" uid="uid://dctcoy1372lqy" path="res://scrolling.gdshader" id="1_vfqsj"]
+[ext_resource type="Texture2D" uid="uid://bsw1skpugl1a2" path="res://Background.png" id="2_8o44v"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tpbvd"]
+shader = ExtResource("1_vfqsj")
+shader_parameter/direction = Vector2(0, -1)
+shader_parameter/speed = 1.0
+
+[node name="Scrolling BG" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_tpbvd")
+position = Vector2(239, 319)
+texture = ExtResource("2_8o44v")
