@@ -1,18 +1,18 @@
-[gd_scene load_steps=9 format=3 uid="uid://bg6jrep468hf0"]
+[gd_scene load_steps=10 format=3 uid="uid://bg6jrep468hf0"]
 
 [ext_resource type="Texture2D" uid="uid://bjjuvp2h6ltsl" path="res://TextBox-Sheet.png" id="1_0nste"]
 [ext_resource type="Texture2D" uid="uid://boxqpu4ei3e53" path="res://Portrait-colonel-Sheet.png" id="2_if77y"]
 [ext_resource type="Script" uid="uid://cyh0clqw057oi" path="res://dialogue_box.gd" id="3_351bv"]
-[ext_resource type="Script" uid="uid://drw77iohon2r8" path="res://portrait.gd" id="3_if77y"]
+[ext_resource type="Script" path="res://portrait.gd" id="3_if77y"]
 [ext_resource type="Texture2D" uid="uid://divee38apuc7k" path="res://Portrait-jack-Sheet.png" id="4_351bv"]
+[ext_resource type="Texture2D" uid="uid://jr8vx6sq0lyy" path="res://Portrait-boss-Sheet.png" id="5_med3p"]
+[ext_resource type="Texture2D" uid="uid://cobm4opuda3mo" path="res://Portrait-narrator-Sheet.png" id="6_f71wr"]
+[ext_resource type="FontFile" uid="uid://bh4nsh1ox4fec" path="res://Fonts/Silkscreen-Regular.ttf" id="7_f71wr"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_351bv"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_85jfh"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_351bv"]
+[sub_resource type="LabelSettings" id="LabelSettings_f71wr"]
+font = ExtResource("7_f71wr")
 font_size = 8
-font_color = Color(0.564737, 0.710577, 0.937536, 1)
+font_color = Color(0.417256, 0.653194, 1, 1)
 
 [node name="Dialogue Box" type="Control"]
 layout_mode = 3
@@ -40,15 +40,17 @@ offset_right = 65.0
 offset_bottom = 90.0
 texture = ExtResource("4_351bv")
 script = ExtResource("3_if77y")
-character_portraits = Array[Texture]([ExtResource("4_351bv"), ExtResource("2_if77y"), SubResource("PlaceholderTexture2D_351bv"), SubResource("PlaceholderTexture2D_85jfh")])
+character_portraits = Array[Texture]([ExtResource("4_351bv"), ExtResource("2_if77y"), ExtResource("5_med3p"), ExtResource("6_f71wr")])
 
 [node name="Text" type="Label" parent="Dialogue Sprite" node_paths=PackedStringArray("dialogue_box")]
+texture_filter = 1
 layout_mode = 0
-offset_left = 89.0
-offset_top = 20.0
-offset_right = 257.0
-offset_bottom = 83.0
-label_settings = SubResource("LabelSettings_351bv")
+offset_left = 86.0
+offset_top = 17.0
+offset_right = 261.0
+offset_bottom = 86.0
+theme_override_colors/font_color = Color(0.32197, 0.616193, 0.90412, 1)
+label_settings = SubResource("LabelSettings_f71wr")
 autowrap_mode = 3
 script = ExtResource("3_351bv")
 time_between_char = 0.05

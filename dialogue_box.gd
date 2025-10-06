@@ -63,14 +63,15 @@ func display_one_liner(index): # This function selects a random death line to sa
 	if current_char >= total_chars:
 		$Timer.stop()
 	
-func _on_button_pressed(): # This function will be put inside a signal based on a button press to progress dialogue
-	current_line += 1
-	current_char = 0
-	if current_line >= lines.length():
-		hide_dialogue_box()
-	else:
-		$Timer.start()
-		display_dialogue()
+func _input(event: InputEvent) -> void: # This function will be put inside a signal based on a button press to progress dialogue
+	if event.is_action_pressed("shoot"):
+		current_line += 1
+		current_char = 0
+		if current_line >= lines.size():
+			hide_dialogue_box()
+		else:
+			$Timer.start()
+			display_dialogue()
 
 func hide_dialogue_box():
 	dialogue_box.visible = false
