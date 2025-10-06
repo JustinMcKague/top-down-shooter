@@ -8,7 +8,13 @@ var lasers_emitted: int = 0
 var rng = RandomNumberGenerator.new()
 
 func _ready() -> void:
-	fire_laser()
+	BossManager.attack.connect(_on_attack_signal)
+
+func _on_attack_signal(attack: BossManager.BossAttack):
+	if attack != BossManager.BossAttack.LASER:
+		return
+	else:
+		fire_laser()
 
 func fire_laser():
 	var laser_inst = laser.instantiate()

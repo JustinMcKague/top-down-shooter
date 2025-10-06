@@ -1,0 +1,32 @@
+[gd_scene load_steps=7 format=3 uid="uid://cfdtsvm4tdvxj"]
+
+[ext_resource type="PackedScene" uid="uid://b7rj4ow551qxe" path="res://_Scenes/scrolling_bg.tscn" id="1_mj2jn"]
+[ext_resource type="PackedScene" uid="uid://cmn3inbpo7no1" path="res://_Scenes/vignette_camera.tscn" id="2_kdryc"]
+[ext_resource type="PackedScene" uid="uid://d3palywjjerqo" path="res://Health_Bar/ui.tscn" id="3_6e45b"]
+[ext_resource type="PackedScene" uid="uid://dokrx3gqr27y1" path="res://enemy_spawner.tscn" id="4_e35lh"]
+[ext_resource type="PackedScene" uid="uid://bg6jrep468hf0" path="res://dialogue_box.tscn" id="5_udeyl"]
+[ext_resource type="PackedScene" uid="uid://d0437jpiymqsk" path="res://Player/player.tscn" id="6_kdryc"]
+
+[node name="Game Scene" type="Node2D"]
+
+[node name="Scrolling BG" parent="." instance=ExtResource("1_mj2jn")]
+
+[node name="player" parent="Scrolling BG" instance=ExtResource("6_kdryc")]
+position = Vector2(235, 480)
+
+[node name="Vignette Camera" parent="Scrolling BG" instance=ExtResource("2_kdryc")]
+
+[node name="Dialogue Box" parent="." instance=ExtResource("5_udeyl")]
+offset_left = 242.0
+offset_top = 638.0
+offset_right = 242.0
+offset_bottom = 638.0
+
+[node name="Enemy Spawner" parent="." instance=ExtResource("4_e35lh")]
+position = Vector2(240, 0)
+
+[node name="UI" parent="." instance=ExtResource("3_6e45b")]
+offset_left = -16.0
+offset_top = 27.0
+offset_right = -16.0
+offset_bottom = 27.0

@@ -53,8 +53,10 @@ autoplay = "idel"
 frame_progress = 0.138229
 flip_h = true
 
-[node name="HitBox" type="Area2D" parent="."]
+[node name="HitBox" type="Area2D" parent="." groups=["enemy_bullet"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2(1, 1.5)
 shape = SubResource("RectangleShape2D_itird")
+
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]

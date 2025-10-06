@@ -6,8 +6,8 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8q7c6"]
 shader = ExtResource("1_5cgjh")
 shader_parameter/radius = 1.0
-shader_parameter/softness = 0.245
-shader_parameter/intensity = 1.0
+shader_parameter/softness = 0.335
+shader_parameter/intensity = 0.82
 shader_parameter/contrast = 1.374
 shader_parameter/radiality = 1.0
 shader_parameter/vignette_color = Color(0, 0, 0, 1)

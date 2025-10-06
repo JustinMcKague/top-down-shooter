@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bjjuvp2h6ltsl" path="res://TextBox-Sheet.png" id="1_0nste"]
 [ext_resource type="Texture2D" uid="uid://boxqpu4ei3e53" path="res://Portrait-colonel-Sheet.png" id="2_if77y"]
 [ext_resource type="Script" uid="uid://cyh0clqw057oi" path="res://dialogue_box.gd" id="3_351bv"]
-[ext_resource type="Script" path="res://portrait.gd" id="3_if77y"]
+[ext_resource type="Script" uid="uid://drw77iohon2r8" path="res://portrait.gd" id="3_if77y"]
 [ext_resource type="Texture2D" uid="uid://divee38apuc7k" path="res://Portrait-jack-Sheet.png" id="4_351bv"]
 [ext_resource type="Texture2D" uid="uid://jr8vx6sq0lyy" path="res://Portrait-boss-Sheet.png" id="5_med3p"]
 [ext_resource type="Texture2D" uid="uid://cobm4opuda3mo" path="res://Portrait-narrator-Sheet.png" id="6_f71wr"]
@@ -24,15 +24,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Dialogue Sprite" type="TextureRect" parent="."]
-layout_mode = 2
-offset_left = -187.0
-offset_top = -121.0
-offset_right = 188.0
-offset_bottom = -18.0
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="Dialogue Sprite" type="TextureRect" parent="CanvasLayer"]
+offset_left = 53.0
+offset_top = 519.0
+offset_right = 428.0
+offset_bottom = 622.0
 texture = ExtResource("1_0nste")
 
-[node name="Portrait" type="TextureRect" parent="Dialogue Sprite"]
+[node name="Portrait" type="TextureRect" parent="CanvasLayer/Dialogue Sprite"]
 layout_mode = 0
 offset_left = 15.0
 offset_top = 13.0
@@ -42,7 +44,7 @@ texture = ExtResource("4_351bv")
 script = ExtResource("3_if77y")
 character_portraits = Array[Texture]([ExtResource("4_351bv"), ExtResource("2_if77y"), ExtResource("5_med3p"), ExtResource("6_f71wr")])
 
-[node name="Text" type="Label" parent="Dialogue Sprite" node_paths=PackedStringArray("dialogue_box")]
+[node name="Text" type="Label" parent="CanvasLayer/Dialogue Sprite" node_paths=PackedStringArray("dialogue_box", "brief_timer")]
 texture_filter = 1
 layout_mode = 0
 offset_left = 86.0
@@ -55,8 +57,12 @@ autowrap_mode = 3
 script = ExtResource("3_351bv")
 time_between_char = 0.05
 dialogue_box = NodePath("../..")
+brief_timer = NodePath("../../../BriefDelay")
 
-[node name="Timer" type="Timer" parent="Dialogue Sprite/Text"]
+[node name="Timer" type="Timer" parent="CanvasLayer/Dialogue Sprite/Text"]
 
-[connection signal="dialogue_changed" from="Dialogue Sprite/Text" to="Dialogue Sprite/Portrait" method="_on_text_dialogue_changed"]
-[connection signal="timeout" from="Dialogue Sprite/Text/Timer" to="Dialogue Sprite/Text" method="_on_timer_timeout"]
+[node name="BriefDelay" type="Timer" parent="."]
+
+[connection signal="dialogue_changed" from="CanvasLayer/Dialogue Sprite/Text" to="CanvasLayer/Dialogue Sprite/Portrait" method="_on_text_dialogue_changed"]
+[connection signal="timeout" from="CanvasLayer/Dialogue Sprite/Text/Timer" to="CanvasLayer/Dialogue Sprite/Text" method="_on_timer_timeout"]
+[connection signal="timeout" from="BriefDelay" to="CanvasLayer/Dialogue Sprite/Text" method="_on_brief_delay_timeout"]

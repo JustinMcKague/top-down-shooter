@@ -7,3 +7,9 @@ extends Node
 @export var playerFireRate: float = 0.25
 
 @export var playerHealth: int = 5
+
+var can_fire: bool = false
+
+var battery_decaying: bool = false
+
+signal player_death(diaType: DialogueGlobal.DialogueType)

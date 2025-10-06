@@ -20,6 +20,8 @@ config/icon="res://Game_Asets/icon.svg"
 Global="*res://Global/global.gd"
 DialogueGlobal="*res://Global/dialogue_global.gd"
 PlayerVariables="*res://Global/player_variables.gd"
+FlowManager="*res://Global/flow_manager.gd"
+BossManager="*res://Global/boss_manager.gd"
 
 [display]
 

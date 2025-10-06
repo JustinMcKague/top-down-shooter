@@ -38,7 +38,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="enemy_bullet" type="Area2D" groups=["enemy_bullet"]]
+[node name="enemy_bullet" type="Area2D"]
 texture_filter = 1
 script = ExtResource("1_2ff5n")
 
@@ -56,3 +56,5 @@ sprite_frames = SubResource("SpriteFrames_curst")
 animation = &"idel"
 autoplay = "idel"
 frame_progress = 0.803104
+
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]

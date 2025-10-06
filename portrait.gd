@@ -15,6 +15,5 @@ func _ready() -> void:
 func display_portrait(character):
 	texture = portrait_dict[character]
 
-
 func _on_text_dialogue_changed(speaker: Variant) -> void:
 	display_portrait(speaker)
