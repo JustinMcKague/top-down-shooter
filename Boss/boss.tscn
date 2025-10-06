@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cw0nh000dvxkk"]
+[gd_scene load_steps=25 format=3 uid="uid://cw0nh000dvxkk"]
 
 [ext_resource type="Texture2D" uid="uid://ceepyp48rfoas" path="res://Game_Asets/Boss-Sheet.webp" id="1_2mdct"]
 [ext_resource type="Script" uid="uid://ckww1cciujee4" path="res://Boss/boss.gd" id="1_7ba5a"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://bteggfjmwn30e" path="res://Boss/Boss Attacks/Wave/wave_emitter.gd" id="4_7ba5a"]
 [ext_resource type="PackedScene" uid="uid://coas4vpmfcaqr" path="res://Boss/Boss Attacks/Laser/boss_laser.tscn" id="6_mk3vo"]
 [ext_resource type="PackedScene" uid="uid://cbjdi8dhp04vn" path="res://Boss/Boss Attacks/Wave/missile.tscn" id="8_ju3tf"]
+[ext_resource type="Texture2D" uid="uid://pj5l5sshtcaj" path="res://Boss/Boss Damage/BossDamage-Sheet.png" id="9_ntee4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2mdct"]
 radius = 247.025
@@ -37,10 +38,92 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_mk3vo"]
 radius = 247.0
 
-[node name="Boss" type="CharacterBody2D" groups=["enemy"]]
+[sub_resource type="AtlasTexture" id="AtlasTexture_sri3m"]
+atlas = ExtResource("9_ntee4")
+region = Rect2(0, 0, 175, 148)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2j6g7"]
+atlas = ExtResource("9_ntee4")
+region = Rect2(175, 0, 175, 148)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_myhfd"]
+atlas = ExtResource("9_ntee4")
+region = Rect2(350, 0, 175, 148)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tjlxr"]
+atlas = ExtResource("9_ntee4")
+region = Rect2(0, 148, 175, 148)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_klplh"]
+atlas = ExtResource("9_ntee4")
+region = Rect2(175, 148, 175, 148)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r5hgr"]
+atlas = ExtResource("9_ntee4")
+region = Rect2(350, 148, 175, 148)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdnl6"]
+atlas = ExtResource("9_ntee4")
+region = Rect2(0, 296, 175, 148)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_71440"]
+atlas = ExtResource("9_ntee4")
+region = Rect2(175, 296, 175, 148)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4o1ob"]
+atlas = ExtResource("9_ntee4")
+region = Rect2(350, 296, 175, 148)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iht7o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sri3m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2j6g7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_myhfd")
+}],
+"loop": true,
+"name": &"level1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjlxr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_klplh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r5hgr")
+}],
+"loop": true,
+"name": &"level2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fdnl6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_71440")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4o1ob")
+}],
+"loop": true,
+"name": &"level3",
+"speed": 5.0
+}]
+
+[node name="Boss" type="CharacterBody2D" node_paths=PackedStringArray("damaged_anim")]
 texture_filter = 1
 position = Vector2(234, 174)
 script = ExtResource("1_7ba5a")
+damaged_anim = NodePath("Damaged")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -58,7 +141,7 @@ frame_progress = 0.500742
 [node name="HitBox" type="Area2D" parent="."]
 visible = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" groups=["enemy"]]
 position = Vector2(4, -152)
 shape = SubResource("CircleShape2D_mk3vo")
 
@@ -100,7 +183,18 @@ missile = ExtResource("8_ju3tf")
 [node name="Delay" type="Timer" parent="Wave Emitter"]
 wait_time = 0.25
 
+[node name="DeathDelay" type="Timer" parent="."]
+
+[node name="Damaged" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(2, -107)
+scale = Vector2(2.5, 2.5)
+sprite_frames = SubResource("SpriteFrames_iht7o")
+animation = &"level1"
+frame_progress = 0.260783
+
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="timeout" from="Projectile Spray/Delay" to="Projectile Spray" method="_on_delay_timeout"]
 [connection signal="timeout" from="Laser Beam/Delay" to="Laser Beam" method="_on_delay_timeout"]
 [connection signal="timeout" from="Wave Emitter/Delay" to="Wave Emitter" method="_on_delay_timeout"]
+[connection signal="timeout" from="DeathDelay" to="." method="_on_death_delay_timeout"]

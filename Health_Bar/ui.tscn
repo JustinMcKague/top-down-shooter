@@ -14,20 +14,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer"]
 texture_filter = 1
-layout_mode = 0
-offset_left = 265.0
-offset_top = 1.0
-offset_right = 477.0
-offset_bottom = 41.0
+offset_left = 426.0
+offset_top = 250.0
+offset_right = 638.0
+offset_bottom = 290.0
+rotation = -1.5708
 value = 100.0
 texture_under = ExtResource("1_re5o7")
 texture_progress = ExtResource("2_hrkyt")
 texture_progress_offset = Vector2(6, 5)
 script = ExtResource("3_hrkyt")
 
-[node name="Timer" type="Timer" parent="TextureProgressBar"]
+[node name="Timer" type="Timer" parent="CanvasLayer/TextureProgressBar"]
 autostart = true
 
-[connection signal="timeout" from="TextureProgressBar/Timer" to="TextureProgressBar" method="_on_timer_timeout"]
+[connection signal="timeout" from="CanvasLayer/TextureProgressBar/Timer" to="CanvasLayer/TextureProgressBar" method="_on_timer_timeout"]

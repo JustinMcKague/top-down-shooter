@@ -9,7 +9,13 @@ extends Node2D
 var projectiles_fired = 0
 
 func _ready() -> void:
-	fire_spray()
+	BossManager.attack.connect(_on_attack_signal)
+	
+func _on_attack_signal(attack: BossManager.BossAttack):
+	if attack != BossManager.BossAttack.SPRAY:
+		return
+	else:
+		initiate_spray()
 	
 func initiate_spray():
 	projectiles_fired = 0

@@ -40,7 +40,7 @@ func assign_preamble_dialogue():
 		Dialogue.new(CharacterName.Narrator, "The government decided to keep the valuable resources to themselves in order to keep the civilizations on 'lesser planets' weaker."),
 		Dialogue.new(CharacterName.Narrator, "Because of this oppression, the weaker planets banded together to form a rebel force."),
 		Dialogue.new(CharacterName.Narrator, "They named their rebel force The Food Chain of Command, and each tier on the food chain is tasked with reclaiming different resources."),
-		Dialogue.new(CharacterName.Narrator, "Jack is one of the rebel force's ace pilots. He is tasked with the noble mission of reclaiming seeds for nutrient dense agriculture."),
+		Dialogue.new(CharacterName.Narrator, "Jack is one of the rebel forces' ace pilots. He is tasked with the noble mission of reclaiming seeds for nutrient dense agriculture."),
 		Dialogue.new(CharacterName.Narrator, "This is his story...")
 	]
 	
@@ -48,6 +48,7 @@ func assign_brief_dialogue():
 	dialogue_dicts[DialogueType.Brief] = [
 	Dialogue.new(CharacterName.Colonel, "Jack, you've been tasked with infiltrating enemy territory and clearing a path for our troops to take control of the enemy's cruiser."),
 	Dialogue.new(CharacterName.Colonel, "We've outfitted you with the most advanced R4b-b1t ship our scientists could create, but its energy stores are low due to budget cuts."),
+	Dialogue.new(CharacterName.Colonel, "So be sure to look out for some energy to keep the lights running and find some tools that can help you get stronger!"),
 	Dialogue.new(CharacterName.Jack, "You gave me this ship because I'm your ace pilot! Right, Colonel?"),
 	Dialogue.new(CharacterName.Colonel, "Yes, Jack. You are the ace pilot of the Small Rodent tier of our Food Chain of Command. Be proud of that, son."),
 	Dialogue.new(CharacterName.Jack, "Doesn't sound quite as impressive when you put it like that..."),
@@ -63,13 +64,13 @@ func assign_death_dialogue():
 	dialogue_dicts[DialogueType.Death] = [
 	Dialogue.new(CharacterName.Colonel, "Jack? Jaaaaaaaaaack!!!"),
 	Dialogue.new(CharacterName.Colonel, "He's hopping along in heaven now..."),
-	# Dialogue.new(CharacterName.Colonel, "Uhhhh, yes. HQ, I need you to bring out clone Jack number " + str(attempt number + 1))
+	Dialogue.new(CharacterName.Colonel, "Uhhhh, yes. HQ, I need you to bring out clone Jack number " + str(Global.attempt + 1)),
 	Dialogue.new(CharacterName.Colonel, "So much for that promotion..."),
 	]
 
 
 func assign_boss_dialogue():
-	dialogue_dicts[DialogueType] = [
+	dialogue_dicts[DialogueType.Boss] = [
 	Dialogue.new(CharacterName.Jack, "Whoa... That's one big turtle."),
 	Dialogue.new(CharacterName.Boss, "I've actually slimmed down quite a bit after eating all these vegetables."),
 	Dialogue.new(CharacterName.Jack, "No, no! You look great! Really.."),
@@ -79,10 +80,13 @@ func assign_boss_dialogue():
 	]
 	
 func get_character_name(dialogue_type: DialogueType, arr_index: int) -> CharacterName:
+	print("dialogue type: " + str(dialogue_type) + " at index of: " + str(arr_index))
 	if dialogue_dicts.has(dialogue_type) and arr_index < dialogue_dicts[dialogue_type].size():
 		var dialogue_inst = dialogue_dicts[dialogue_type][arr_index]
 		return dialogue_inst.speaker
-	return -1
+	else:
+		print("Did not work")
+		return -1
 	
 func get_dialogues_by_type(dialogue_type: DialogueType) -> Array:
 	return dialogue_dicts.get(dialogue_type, [])

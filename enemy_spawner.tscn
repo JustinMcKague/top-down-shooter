@@ -1,0 +1,11 @@
+[gd_scene load_steps=6 format=3 uid="uid://dokrx3gqr27y1"]
+
+[ext_resource type="Script" uid="uid://j6y6fgalije" path="res://enemy_spawner.gd" id="1_ewhtn"]
+[ext_resource type="PackedScene" uid="uid://xbx6ps0eris1" path="res://Carrot_Ships/carrot_ships.tscn" id="2_568dl"]
+[ext_resource type="PackedScene" uid="uid://wb3rg6h3jwj0" path="res://Beet_ships/beet_ships.tscn" id="3_x8ooj"]
+[ext_resource type="PackedScene" uid="uid://dyv2t2ufq2xks" path="res://Corn_Ships/corn_ships.tscn" id="4_nmoyu"]
+[ext_resource type="PackedScene" uid="uid://cw0nh000dvxkk" path="res://Boss/boss.tscn" id="5_x1605"]
+
+[node name="Enemy Spawner" type="Node2D"]
+script = ExtResource("1_ewhtn")
+enemy_prefabs = Array[PackedScene]([ExtResource("2_568dl"), ExtResource("3_x8ooj"), ExtResource("4_nmoyu"), ExtResource("5_x1605")])

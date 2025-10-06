@@ -20,7 +20,13 @@ func _ready() -> void:
 	for i in number_of_spawns:
 		var adjusted = width - (i * 48) - 240
 		spawn_points.append(adjusted)
-	prep_wave()
+	BossManager.attack.connect(_on_attack_signal)
+	
+func _on_attack_signal(attack: BossManager.BossAttack):
+	if attack != BossManager.BossAttack.WAVE:
+		return
+	else:
+		prep_wave()
 		
 func prep_wave():
 	firing_left_right()

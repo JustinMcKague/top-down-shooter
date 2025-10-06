@@ -50,7 +50,9 @@ autoplay = "idel"
 flip_h = true
 flip_v = true
 
-[node name="hitBox" type="Area2D" parent="."]
+[node name="hitBox" type="Area2D" parent="." groups=["enemy_bullet"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitBox"]
 shape = SubResource("RectangleShape2D_dr5d5")
+
+[connection signal="area_entered" from="hitBox" to="." method="_on_hit_box_area_entered"]
