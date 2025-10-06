@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=3 uid="uid://wb3rg6h3jwj0"]
+
+[ext_resource type="Script" uid="uid://bayxvbufuan1t" path="res://Beet_ships/beet_ships.gd" id="1_4tvk8"]
+[ext_resource type="Texture2D" uid="uid://b6y5i4sr220ei" path="res://Game_Asets/enemy_asets/Enemies-Sheet.webp" id="1_k823c"]
+[ext_resource type="PackedScene" uid="uid://b6rjb27ltlt3h" path="res://beet_bullet/beet_bullet.tscn" id="2_qu66l"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_k823c"]
+radius = 11.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4tvk8"]
+atlas = ExtResource("1_k823c")
+region = Rect2(0, 50, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qu66l"]
+atlas = ExtResource("1_k823c")
+region = Rect2(50, 50, 50, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vecfr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4tvk8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qu66l")
+}],
+"loop": true,
+"name": &"idel",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4tvk8"]
+radius = 14.0357
+
+[node name="Beet_ships" type="CharacterBody2D"]
+texture_filter = 1
+script = ExtResource("1_4tvk8")
+beet_bullet_scene = ExtResource("2_qu66l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("CircleShape2D_k823c")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 1)
+sprite_frames = SubResource("SpriteFrames_vecfr")
+animation = &"idel"
+frame_progress = 0.192259
+
+[node name="ShootingTimer" type="Timer" parent="."]
+wait_time = 0.75
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, 8)
+shape = SubResource("CircleShape2D_4tvk8")
+
+[connection signal="timeout" from="ShootingTimer" to="." method="_on_shooting_timer_timeout"]
+[connection signal="area_exited" from="HitBox" to="." method="_on_hit_box_area_exited"]
