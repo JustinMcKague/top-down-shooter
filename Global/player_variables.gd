@@ -5,3 +5,5 @@ extends Node
 @export var playerSpeed: float = 1.0
 
 @export var playerFireRate: float = 0.25
+
+@export var playerHealth: int = 5

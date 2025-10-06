@@ -1,0 +1,74 @@
+[gd_scene load_steps=10 format=3 uid="uid://de8e4k1ajflmy"]
+
+[ext_resource type="Script" uid="uid://c0eo5g1snjgy3" path="res://spray_projectile.gd" id="1_vn0uf"]
+[ext_resource type="Texture2D" uid="uid://dbe6iltnjq6pq" path="res://Boss/Boss Attacks/Spray/ProjectilesBoss_standard-Sheet.png" id="2_57w20"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gkafi"]
+radius = 9.05539
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g053j"]
+atlas = ExtResource("2_57w20")
+region = Rect2(0, 0, 25, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_77p11"]
+atlas = ExtResource("2_57w20")
+region = Rect2(25, 0, 25, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hmc6j"]
+atlas = ExtResource("2_57w20")
+region = Rect2(50, 0, 25, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vn0uf"]
+atlas = ExtResource("2_57w20")
+region = Rect2(75, 0, 25, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_57w20"]
+atlas = ExtResource("2_57w20")
+region = Rect2(100, 0, 25, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_12ef0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g053j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_77p11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hmc6j")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vn0uf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_57w20")
+}],
+"loop": false,
+"name": &"impact",
+"speed": 5.0
+}]
+
+[node name="Spray Projectile" type="Area2D" groups=["enemy_bullet"]]
+script = ExtResource("1_vn0uf")
+speed = 4.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 1)
+shape = SubResource("CircleShape2D_gkafi")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_12ef0")
+animation = &"impact"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

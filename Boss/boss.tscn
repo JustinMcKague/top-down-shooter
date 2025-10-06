@@ -1,0 +1,107 @@
+[gd_scene load_steps=14 format=3 uid="uid://cw0nh000dvxkk"]
+
+[ext_resource type="Texture2D" uid="uid://ceepyp48rfoas" path="res://Game_Asets/Boss-Sheet.webp" id="1_2mdct"]
+[ext_resource type="Script" uid="uid://ckww1cciujee4" path="res://Boss/boss.gd" id="1_7ba5a"]
+[ext_resource type="Script" uid="uid://83ecr14pxmg2" path="res://Boss/projectile_spray.gd" id="2_mrrbl"]
+[ext_resource type="Script" uid="uid://djeibfyhiwtb2" path="res://Boss/laser_beam.gd" id="3_0sshd"]
+[ext_resource type="PackedScene" uid="uid://de8e4k1ajflmy" path="res://Boss/Boss Attacks/Spray/spray_projectile.tscn" id="3_7ba5a"]
+[ext_resource type="Script" uid="uid://bteggfjmwn30e" path="res://Boss/wave_emitter.gd" id="4_7ba5a"]
+[ext_resource type="PackedScene" uid="uid://coas4vpmfcaqr" path="res://Boss/Boss Attacks/Laser/boss_laser.tscn" id="6_mk3vo"]
+[ext_resource type="PackedScene" uid="uid://cbjdi8dhp04vn" path="res://Boss/Boss Attacks/Wave/missile.tscn" id="8_ju3tf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2mdct"]
+radius = 247.025
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t20dt"]
+atlas = ExtResource("1_2mdct")
+region = Rect2(0, 0, 195, 183)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4cnrr"]
+atlas = ExtResource("1_2mdct")
+region = Rect2(195, 0, 195, 183)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mrrbl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t20dt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4cnrr")
+}],
+"loop": true,
+"name": &"idel",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mk3vo"]
+radius = 247.0
+
+[node name="Boss" type="CharacterBody2D" groups=["enemy"]]
+texture_filter = 1
+position = Vector2(234, 174)
+script = ExtResource("1_7ba5a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-1, -146)
+scale = Vector2(1, 1)
+shape = SubResource("CircleShape2D_2mdct")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(3, -139)
+scale = Vector2(2.5, 2.5)
+sprite_frames = SubResource("SpriteFrames_mrrbl")
+animation = &"idel"
+autoplay = "idel"
+frame_progress = 0.500742
+
+[node name="HitBox" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(4, -152)
+shape = SubResource("CircleShape2D_mk3vo")
+
+[node name="Projectile Spray" type="Node2D" parent="." node_paths=PackedStringArray("emitters")]
+script = ExtResource("2_mrrbl")
+emitters = [NodePath("Right Spray Emitter"), NodePath("Left Spray Emitter")]
+bullet_spray = ExtResource("3_7ba5a")
+
+[node name="Right Spray Emitter" type="Node2D" parent="Projectile Spray"]
+position = Vector2(116, 52)
+
+[node name="Left Spray Emitter" type="Node2D" parent="Projectile Spray"]
+position = Vector2(-110, 55)
+
+[node name="Delay" type="Timer" parent="Projectile Spray"]
+wait_time = 0.1
+
+[node name="Laser Beam" type="Node2D" parent="." node_paths=PackedStringArray("laser_emitters")]
+script = ExtResource("3_0sshd")
+laser_emitters = [NodePath("Center Laser Emitter"), NodePath("Right Laser Emitter"), NodePath("Left Laser Emitter")]
+laser = ExtResource("6_mk3vo")
+
+[node name="Center Laser Emitter" type="Node2D" parent="Laser Beam"]
+position = Vector2(1, 90)
+
+[node name="Right Laser Emitter" type="Node2D" parent="Laser Beam"]
+position = Vector2(215, -60)
+
+[node name="Left Laser Emitter" type="Node2D" parent="Laser Beam"]
+position = Vector2(-209, -59)
+
+[node name="Delay" type="Timer" parent="Laser Beam"]
+wait_time = 2.0
+
+[node name="Wave Emitter" type="Node2D" parent="."]
+script = ExtResource("4_7ba5a")
+missile = ExtResource("8_ju3tf")
+
+[node name="Delay" type="Timer" parent="Wave Emitter"]
+wait_time = 0.25
+
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="timeout" from="Projectile Spray/Delay" to="Projectile Spray" method="_on_delay_timeout"]
+[connection signal="timeout" from="Laser Beam/Delay" to="Laser Beam" method="_on_delay_timeout"]
+[connection signal="timeout" from="Wave Emitter/Delay" to="Wave Emitter" method="_on_delay_timeout"]
