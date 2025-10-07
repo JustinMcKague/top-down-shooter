@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="RJam"
-run/main_scene="uid://c742vff62oudl"
+run/main_scene="uid://bkhmfof4muqs6"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://Game_Asets/icon.svg"
 
@@ -28,7 +28,6 @@ BossManager="*res://Global/boss_manager.gd"
 window/size/viewport_width=480
 window/size/viewport_height=640
 window/size/mode=2
-window/size/resizable=false
 window/stretch/mode="viewport"
 
 [global_group]
@@ -38,6 +37,7 @@ enemy=""
 bullet=""
 enemy_bullet=""
 walls=""
+energy=""
 
 [gui]
 
@@ -74,3 +74,5 @@ shoot={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

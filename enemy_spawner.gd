@@ -19,6 +19,12 @@ func _ready() -> void:
 	FlowManager.enemy_spawn_time.connect(_on_spawn_time_reached)
 	BossManager.attack.connect(_on_attack_signal)
 	FlowManager.final_enemy_spawned.connect(_on_boss_time)
+	PlayerVariables.restart.connect(_on_restart)
+
+func _on_restart():
+	for n in get_children():
+		remove_child(n)
+		n.queue_free()
 
 func _on_spawn_time_reached(enemy: FlowManager.EnemySpawnInfo):
 	var enemy_inst = enemy_dict[enemy.type].instantiate()

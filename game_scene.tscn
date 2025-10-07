@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cfdtsvm4tdvxj"]
+[gd_scene load_steps=15 format=3 uid="uid://cfdtsvm4tdvxj"]
 
 [ext_resource type="PackedScene" uid="uid://b7rj4ow551qxe" path="res://_Scenes/scrolling_bg.tscn" id="1_mj2jn"]
 [ext_resource type="PackedScene" uid="uid://cmn3inbpo7no1" path="res://_Scenes/vignette_camera.tscn" id="2_kdryc"]
@@ -6,12 +6,24 @@
 [ext_resource type="PackedScene" uid="uid://dokrx3gqr27y1" path="res://enemy_spawner.tscn" id="4_e35lh"]
 [ext_resource type="PackedScene" uid="uid://bg6jrep468hf0" path="res://dialogue_box.tscn" id="5_udeyl"]
 [ext_resource type="PackedScene" uid="uid://d0437jpiymqsk" path="res://Player/player.tscn" id="6_kdryc"]
+[ext_resource type="AudioStream" uid="uid://t3lgc6bfk41g" path="res://Carrot_Ships/leveltheme_.wav" id="7_6e45b"]
+[ext_resource type="Script" uid="uid://3pee7mt8yhtn" path="res://music.gd" id="8_j5hk1"]
+[ext_resource type="Script" uid="uid://drk6e8kcxvny4" path="res://game_over.gd" id="8_udeyl"]
+[ext_resource type="FontFile" uid="uid://bh4nsh1ox4fec" path="res://Fonts/Silkscreen-Regular.ttf" id="9_miq82"]
+[ext_resource type="AudioStream" uid="uid://bx2huby65bfxj" path="res://BossTheme_- 10_6_25, 10.15 PM.wav" id="9_ueiaa"]
+[ext_resource type="Script" uid="uid://dwxp04q2sclob" path="res://win_screen.gd" id="10_miq82"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kdryc"]
+size = Vector2(46, 775)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6e45b"]
+size = Vector2(515, 85)
 
 [node name="Game Scene" type="Node2D"]
 
 [node name="Scrolling BG" parent="." instance=ExtResource("1_mj2jn")]
 
-[node name="player" parent="Scrolling BG" instance=ExtResource("6_kdryc")]
+[node name="player" parent="Scrolling BG" groups=["player"] instance=ExtResource("6_kdryc")]
 position = Vector2(235, 480)
 
 [node name="Vignette Camera" parent="Scrolling BG" instance=ExtResource("2_kdryc")]
@@ -30,3 +42,148 @@ offset_left = -16.0
 offset_top = 27.0
 offset_right = -16.0
 offset_bottom = 27.0
+
+[node name="Area2D" type="Area2D" parent="." groups=["walls"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" groups=["walls"]]
+position = Vector2(-21, 313.5)
+shape = SubResource("RectangleShape2D_kdryc")
+
+[node name="Area2D2" type="Area2D" parent="." groups=["walls"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2" groups=["walls"]]
+position = Vector2(507, 313.5)
+shape = SubResource("RectangleShape2D_kdryc")
+
+[node name="Area2D3" type="Area2D" parent="." groups=["walls"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D3" groups=["walls"]]
+position = Vector2(240.5, -32.5)
+shape = SubResource("RectangleShape2D_6e45b")
+
+[node name="Area2D4" type="Area2D" parent="." groups=["walls"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D4" groups=["walls"]]
+position = Vector2(240.5, 686)
+shape = SubResource("RectangleShape2D_6e45b")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_6e45b")
+autoplay = true
+script = ExtResource("8_j5hk1")
+standard_music = ExtResource("7_6e45b")
+boss_music = ExtResource("9_ueiaa")
+
+[node name="Game Over" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 240.5
+offset_top = 686.0
+offset_right = 280.5
+offset_bottom = 726.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Game Over" node_paths=PackedStringArray("game_over", "subtext", "color")]
+layer = 6
+visible = false
+script = ExtResource("8_udeyl")
+game_over = NodePath("ColorRect/Label")
+subtext = NodePath("ColorRect/Label2")
+color = NodePath("ColorRect")
+
+[node name="ColorRect" type="ColorRect" parent="Game Over/CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.054902, 0.054902, 0.054902, 1)
+
+[node name="Label" type="Label" parent="Game Over/CanvasLayer/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.5
+offset_top = -11.1667
+offset_right = 43.5
+offset_bottom = 11.1667
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.705939, 3.53761e-06, 3.85046e-07, 1)
+theme_override_fonts/font = ExtResource("9_miq82")
+theme_override_font_sizes/font_size = 56
+text = "Game Over"
+
+[node name="Label2" type="Label" parent="Game Over/CanvasLayer/ColorRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -251.0
+offset_right = 84.0
+offset_bottom = -228.667
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.533037, 0.533037, 0.533037, 1)
+theme_override_fonts/font = ExtResource("9_miq82")
+theme_override_font_sizes/font_size = 24
+text = "Press Space to restart"
+
+[node name="You Win" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="You Win"]
+layer = 15
+visible = false
+script = ExtResource("10_miq82")
+
+[node name="ColorRect" type="ColorRect" parent="You Win/CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0768358, 0.0768358, 0.0768358, 1)
+
+[node name="Label" type="Label" parent="You Win/CanvasLayer/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.5
+offset_top = -130.0
+offset_right = 150.5
+offset_bottom = -57.6667
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.243792, 0.531879, 0.928092, 1)
+theme_override_fonts/font = ExtResource("9_miq82")
+theme_override_font_sizes/font_size = 56
+text = "You Win!"
+
+[node name="Label2" type="Label" parent="You Win/CanvasLayer/ColorRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -86.0
+offset_top = -350.0
+offset_right = 86.0
+offset_bottom = -327.667
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.641934, 0.641934, 0.641934, 1)
+theme_override_fonts/font = ExtResource("9_miq82")
+text = "Thank you for playing!"

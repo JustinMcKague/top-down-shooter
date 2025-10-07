@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://wb3rg6h3jwj0"]
+[gd_scene load_steps=18 format=3 uid="uid://wb3rg6h3jwj0"]
 
 [ext_resource type="Script" uid="uid://bayxvbufuan1t" path="res://Beet_ships/beet_ships.gd" id="1_4tvk8"]
 [ext_resource type="Texture2D" uid="uid://b6y5i4sr220ei" path="res://Game_Asets/enemy_asets/Enemies-Sheet.webp" id="1_k823c"]
 [ext_resource type="PackedScene" uid="uid://b6rjb27ltlt3h" path="res://beet_bullet/beet_bullet.tscn" id="2_qu66l"]
+[ext_resource type="PackedScene" uid="uid://heojovg7fkl8" path="res://energy.tscn" id="3_vecfr"]
+[ext_resource type="Texture2D" uid="uid://b3nwqym3c38xb" path="res://Explosion-Sheet.png" id="5_1nri8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_k823c"]
 radius = 11.0
@@ -32,10 +34,62 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_4tvk8"]
 radius = 14.0357
 
-[node name="Beet_ships" type="CharacterBody2D"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_2yn03"]
+atlas = ExtResource("5_1nri8")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s3g8e"]
+atlas = ExtResource("5_1nri8")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lhnso"]
+atlas = ExtResource("5_1nri8")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_08lkf"]
+atlas = ExtResource("5_1nri8")
+region = Rect2(300, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c0bm6"]
+atlas = ExtResource("5_1nri8")
+region = Rect2(400, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gv1hb"]
+atlas = ExtResource("5_1nri8")
+region = Rect2(500, 0, 100, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_di6l0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2yn03")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s3g8e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lhnso")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_08lkf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c0bm6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gv1hb")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 5.0
+}]
+
+[node name="Beet_ships" type="CharacterBody2D" node_paths=PackedStringArray("damaged_anim")]
 texture_filter = 1
 script = ExtResource("1_4tvk8")
 beet_bullet_scene = ExtResource("2_qu66l")
+energy = ExtResource("3_vecfr")
+damaged_anim = NodePath("Damage")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 8)
@@ -56,5 +110,15 @@ wait_time = 0.75
 position = Vector2(0, 8)
 shape = SubResource("CircleShape2D_4tvk8")
 
+[node name="Damage" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_di6l0")
+animation = &"explode"
+
+[node name="HideTimer" type="Timer" parent="."]
+
 [connection signal="timeout" from="ShootingTimer" to="." method="_on_shooting_timer_timeout"]
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="area_exited" from="HitBox" to="." method="_on_hit_box_area_exited"]
+[connection signal="animation_finished" from="Damage" to="." method="_on_damage_animation_finished"]
+[connection signal="timeout" from="HideTimer" to="." method="_on_hide_timer_timeout"]

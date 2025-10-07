@@ -74,6 +74,12 @@ func _ready() -> void:
 		EnemySpawnInfo.new(EnemyType.RADISH, left_pos)
 	]
 	boss_data = EnemySpawnInfo.new(EnemyType.BOSS, Vector2.ZERO)
+	PlayerVariables.restart.connect(_on_restart)
+
+func _on_restart():
+	timer_index = 0
+	global_timer.wait_time = 5.0
+	global_timer.stop()
 
 func _process(delta: float) -> void:
 	if increment_time and global_timer.is_stopped():

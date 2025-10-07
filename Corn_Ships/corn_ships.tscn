@@ -1,10 +1,11 @@
-[gd_scene load_steps=26 format=3 uid="uid://dyv2t2ufq2xks"]
+[gd_scene load_steps=27 format=3 uid="uid://dyv2t2ufq2xks"]
 
 [ext_resource type="Script" uid="uid://bsrpu2lusfc2h" path="res://Corn_Ships/corn_ships.gd" id="1_fkc6a"]
 [ext_resource type="Texture2D" uid="uid://b6y5i4sr220ei" path="res://Game_Asets/enemy_asets/Enemies-Sheet.webp" id="1_kysrq"]
 [ext_resource type="PackedScene" uid="uid://clpt8thxwk8da" path="res://enemy_bullet/enemy_bullet.tscn" id="2_p24ij"]
 [ext_resource type="PackedScene" uid="uid://bulqhelu1w6co" path="res://enemy_bullet_right/enemy_bullet_right.tscn" id="3_mrgwf"]
 [ext_resource type="PackedScene" uid="uid://7bjvcklggqtj" path="res://enemy_bullet_left/enemy_bullet_left.tscn" id="4_qb4ly"]
+[ext_resource type="PackedScene" uid="uid://heojovg7fkl8" path="res://energy.tscn" id="5_tw3ff"]
 [ext_resource type="Texture2D" uid="uid://b3nwqym3c38xb" path="res://Explosion-Sheet.png" id="6_6djdg"]
 [ext_resource type="Texture2D" uid="uid://dbo22dgruhmhs" path="res://ShipDamage-Sheet.png" id="7_tw3ff"]
 
@@ -145,6 +146,7 @@ enemy_bullet_scene = ExtResource("2_p24ij")
 enemy_right_bullet_scene = ExtResource("3_mrgwf")
 enemy_left_bullet_scene = ExtResource("4_qb4ly")
 damaged_anim = NodePath("Damaged")
+energy = ExtResource("5_tw3ff")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1.5)
@@ -172,6 +174,10 @@ animation = &"explode"
 frame = 5
 frame_progress = 1.0
 
+[node name="HideTimer" type="Timer" parent="."]
+wait_time = 0.25
+
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="timeout" from="ShootingTimer" to="." method="_on_shooting_timer_timeout"]
 [connection signal="animation_finished" from="Damaged" to="." method="_on_damaged_animation_finished"]
+[connection signal="timeout" from="HideTimer" to="." method="_on_hide_timer_timeout"]

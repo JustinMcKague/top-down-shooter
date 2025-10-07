@@ -254,9 +254,9 @@ shape = SubResource("RectangleShape2D_4ntmi")
 sprite_frames = SubResource("SpriteFrames_o28un")
 animation = &"warmup"
 
-[node name="HitBox" type="Area2D" parent="."]
+[node name="HitBox" type="Area2D" parent="." groups=["player"]]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" groups=["player"]]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2(0, -7.5)
 shape = SubResource("RectangleShape2D_btcbx")
 

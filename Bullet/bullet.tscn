@@ -45,6 +45,7 @@ script = ExtResource("1_4qwpv")
 
 [node name="HitBox" type="Area2D" parent="." groups=["bullet"]]
 position = Vector2(0, 0.5)
+collision_layer = 9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" groups=["bullet"]]
 position = Vector2(-0.497181, -2)

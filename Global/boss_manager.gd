@@ -32,21 +32,25 @@ func _ready() -> void:
 	
 	boss_timer = Timer.new()
 	add_child(boss_timer)
-	boss_timer.wait_time = 5.0
+	boss_timer.wait_time = 1.0
 	boss_timer.one_shot = false
 	boss_timer.autostart = false
 	boss_timer.connect("timeout", _on_boss_timer_timeout)
+	PlayerVariables.restart.connect(_on_restart)
+	
+func _on_restart():
+	timer_index = 0
+	boss_timer.stop()
+	boss_timer.wait_time = 1.0
+	phase_timer.wait_time = 4.0
 
 func _process(delta: float) -> void:
 	if FlowManager.increment_time and boss_timer.is_stopped() and alive:
-		print("Why is this starting???" + str(FlowManager.increment_time))
 		boss_timer.start()
 
 func _on_phase_timer_timeout():
-	print("Dialogue should be appearing")
 	tween_ended.emit()
 	alive = true
-	
 
 func _on_boss_timer_timeout():
 	match timer_index:

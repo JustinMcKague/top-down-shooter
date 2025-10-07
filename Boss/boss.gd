@@ -12,7 +12,10 @@ var boss_max_health = 50
 
 @export var final_pos: Vector2
 
+var sprite: AnimatedSprite2D
+
 func _ready() -> void:
+	sprite = $AnimatedSprite2D
 	FlowManager.increment_time = false
 	$HitBox.monitoring = false
 	var tween = get_tree().create_tween()
@@ -30,6 +33,9 @@ func _on_tween_ended():
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group('bullet'):
 		boss_health -= 1
+		var tween = create_tween()
+		tween.tween_property(sprite, "modulate", Color.RED, 0.15)
+		tween.tween_property(sprite, "modulate", Color.WHITE, 0.15)
 		check_health_threshold()
 
 func check_health_threshold():
@@ -52,4 +58,4 @@ func explode():
 		explosions[i].play('explosion')
 
 func _on_death_delay_timeout() -> void:
-	self.queue_free()
+	PlayerVariables.win.emit()
