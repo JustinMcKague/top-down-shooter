@@ -172,7 +172,9 @@ animations = [{
 
 [node name="Boss" type="CharacterBody2D" node_paths=PackedStringArray("damaged_anim", "explosions", "explosions_parent", "death_timer")]
 texture_filter = 1
+collision_layer = 12
 script = ExtResource("1_7ba5a")
+boss_health = 125
 damaged_anim = NodePath("Damaged")
 explosions = [NodePath("Explosions/Explosion"), NodePath("Explosions/Explosion2"), NodePath("Explosions/Explosion3"), NodePath("Explosions/Explosion4"), NodePath("Explosions/Explosion5")]
 explosions_parent = NodePath("Explosions")

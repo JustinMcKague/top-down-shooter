@@ -1,0 +1,91 @@
+[gd_scene load_steps=14 format=3 uid="uid://heojovg7fkl8"]
+
+[ext_resource type="Script" uid="uid://cc2rqqn87pyuj" path="res://energy.gd" id="1_if8s4"]
+[ext_resource type="Texture2D" uid="uid://c7hmhj75wpeyw" path="res://PowerUps_battery-Sheet.png" id="2_xffyk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j41tm"]
+atlas = ExtResource("2_xffyk")
+region = Rect2(0, 0, 27, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3mr6w"]
+atlas = ExtResource("2_xffyk")
+region = Rect2(27, 0, 27, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r5kus"]
+atlas = ExtResource("2_xffyk")
+region = Rect2(54, 0, 27, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fsk2e"]
+atlas = ExtResource("2_xffyk")
+region = Rect2(0, 28, 27, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_723l6"]
+atlas = ExtResource("2_xffyk")
+region = Rect2(27, 28, 27, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wk4bb"]
+atlas = ExtResource("2_xffyk")
+region = Rect2(54, 28, 27, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ri1r0"]
+atlas = ExtResource("2_xffyk")
+region = Rect2(0, 56, 27, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_awrty"]
+atlas = ExtResource("2_xffyk")
+region = Rect2(27, 56, 27, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d5ucn"]
+atlas = ExtResource("2_xffyk")
+region = Rect2(54, 56, 27, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rt0mv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j41tm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3mr6w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r5kus")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fsk2e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_723l6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wk4bb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ri1r0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_awrty")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d5ucn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p5fxt"]
+
+[node name="Energy" type="Node2D"]
+script = ExtResource("1_if8s4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_rt0mv")
+frame_progress = 0.583196
+
+[node name="Area2D" type="Area2D" parent="." groups=["energy"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_p5fxt")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

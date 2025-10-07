@@ -25,6 +25,12 @@ func _ready() -> void:
 	generate_random_index()
 	PlayerVariables.player_death.connect(load_dialogue)
 	BossManager.tween_ended.connect(_on_boss_time)
+	PlayerVariables.restart.connect(_on_restart)
+	
+func _on_restart():
+	visible_characters = 0
+	current_char = 0
+	current_line = 0
 
 func generate_random_index() -> int: # Call this function on game restart
 	random_int = randi_range(0, DialogueGlobal.dialogue_dicts[DialogueGlobal.DialogueType.Death].size() - 1)
@@ -111,7 +117,7 @@ func hide_dialogue_box():
 	dialogue_box.visible = false
 	FlowManager.increment_time = true
 	PlayerVariables.can_fire = true
-	#PlayerVariables.battery_decaying = true
+	PlayerVariables.battery_decaying = true
 	lines.clear()
 
 
