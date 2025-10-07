@@ -28,6 +28,7 @@ BossManager="*res://Global/boss_manager.gd"
 window/size/viewport_width=480
 window/size/viewport_height=640
 window/size/mode=2
+window/size/resizable=false
 window/stretch/mode="viewport"
 
 [global_group]

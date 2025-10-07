@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cw0nh000dvxkk"]
+[gd_scene load_steps=33 format=3 uid="uid://cw0nh000dvxkk"]
 
 [ext_resource type="Texture2D" uid="uid://ceepyp48rfoas" path="res://Game_Asets/Boss-Sheet.webp" id="1_2mdct"]
 [ext_resource type="Script" uid="uid://ckww1cciujee4" path="res://Boss/boss.gd" id="1_7ba5a"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://coas4vpmfcaqr" path="res://Boss/Boss Attacks/Laser/boss_laser.tscn" id="6_mk3vo"]
 [ext_resource type="PackedScene" uid="uid://cbjdi8dhp04vn" path="res://Boss/Boss Attacks/Wave/missile.tscn" id="8_ju3tf"]
 [ext_resource type="Texture2D" uid="uid://pj5l5sshtcaj" path="res://Boss/Boss Damage/BossDamage-Sheet.png" id="9_ntee4"]
+[ext_resource type="Texture2D" uid="uid://b3nwqym3c38xb" path="res://Explosion-Sheet.png" id="10_sri3m"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2mdct"]
 radius = 247.025
@@ -119,11 +120,64 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Boss" type="CharacterBody2D" node_paths=PackedStringArray("damaged_anim")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_iht7o"]
+atlas = ExtResource("10_sri3m")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d6ame"]
+atlas = ExtResource("10_sri3m")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nlv3h"]
+atlas = ExtResource("10_sri3m")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gg6m4"]
+atlas = ExtResource("10_sri3m")
+region = Rect2(300, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4d8y5"]
+atlas = ExtResource("10_sri3m")
+region = Rect2(400, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m0623"]
+atlas = ExtResource("10_sri3m")
+region = Rect2(500, 0, 100, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q4fyr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iht7o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6ame")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nlv3h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gg6m4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4d8y5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m0623")
+}],
+"loop": true,
+"name": &"explosion",
+"speed": 5.0
+}]
+
+[node name="Boss" type="CharacterBody2D" node_paths=PackedStringArray("damaged_anim", "explosions", "explosions_parent", "death_timer")]
 texture_filter = 1
-position = Vector2(234, 174)
 script = ExtResource("1_7ba5a")
 damaged_anim = NodePath("Damaged")
+explosions = [NodePath("Explosions/Explosion"), NodePath("Explosions/Explosion2"), NodePath("Explosions/Explosion3"), NodePath("Explosions/Explosion4"), NodePath("Explosions/Explosion5")]
+explosions_parent = NodePath("Explosions")
+death_timer = NodePath("DeathDelay")
+final_pos = Vector2(240, 150)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -184,6 +238,8 @@ missile = ExtResource("8_ju3tf")
 wait_time = 0.25
 
 [node name="DeathDelay" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
 
 [node name="Damaged" type="AnimatedSprite2D" parent="."]
 visible = false
@@ -192,6 +248,40 @@ scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_iht7o")
 animation = &"level1"
 frame_progress = 0.260783
+
+[node name="Explosions" type="Node2D" parent="."]
+visible = false
+position = Vector2(-234, -174)
+
+[node name="Explosion" type="AnimatedSprite2D" parent="Explosions"]
+position = Vector2(135, 180)
+sprite_frames = SubResource("SpriteFrames_q4fyr")
+animation = &"explosion"
+frame_progress = 0.581278
+
+[node name="Explosion2" type="AnimatedSprite2D" parent="Explosions"]
+position = Vector2(241, 233)
+sprite_frames = SubResource("SpriteFrames_q4fyr")
+animation = &"explosion"
+frame_progress = 0.127272
+
+[node name="Explosion3" type="AnimatedSprite2D" parent="Explosions"]
+position = Vector2(405, 98)
+sprite_frames = SubResource("SpriteFrames_q4fyr")
+animation = &"explosion"
+frame_progress = 0.138754
+
+[node name="Explosion4" type="AnimatedSprite2D" parent="Explosions"]
+position = Vector2(280, 135)
+sprite_frames = SubResource("SpriteFrames_q4fyr")
+animation = &"explosion"
+frame_progress = 0.0252187
+
+[node name="Explosion5" type="AnimatedSprite2D" parent="Explosions"]
+position = Vector2(72, 75)
+sprite_frames = SubResource("SpriteFrames_q4fyr")
+animation = &"explosion"
+frame_progress = 0.936479
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="timeout" from="Projectile Spray/Delay" to="Projectile Spray" method="_on_delay_timeout"]

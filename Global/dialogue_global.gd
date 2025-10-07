@@ -80,7 +80,6 @@ func assign_boss_dialogue():
 	]
 	
 func get_character_name(dialogue_type: DialogueType, arr_index: int) -> CharacterName:
-	print("dialogue type: " + str(dialogue_type) + " at index of: " + str(arr_index))
 	if dialogue_dicts.has(dialogue_type) and arr_index < dialogue_dicts[dialogue_type].size():
 		var dialogue_inst = dialogue_dicts[dialogue_type][arr_index]
 		return dialogue_inst.speaker

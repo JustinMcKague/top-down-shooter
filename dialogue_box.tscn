@@ -25,7 +25,7 @@ grow_horizontal = 2
 grow_vertical = 0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 5
+layer = 7
 
 [node name="Dialogue Sprite" type="TextureRect" parent="CanvasLayer"]
 offset_left = 53.0
@@ -44,7 +44,7 @@ texture = ExtResource("4_351bv")
 script = ExtResource("3_if77y")
 character_portraits = Array[Texture]([ExtResource("4_351bv"), ExtResource("2_if77y"), ExtResource("5_med3p"), ExtResource("6_f71wr")])
 
-[node name="Text" type="Label" parent="CanvasLayer/Dialogue Sprite" node_paths=PackedStringArray("dialogue_box", "brief_timer")]
+[node name="Text" type="Label" parent="CanvasLayer/Dialogue Sprite" node_paths=PackedStringArray("dialogue_box", "brief_timer", "blackout")]
 texture_filter = 1
 layout_mode = 0
 offset_left = 86.0
@@ -58,10 +58,26 @@ script = ExtResource("3_351bv")
 time_between_char = 0.05
 dialogue_box = NodePath("../..")
 brief_timer = NodePath("../../../BriefDelay")
+blackout = NodePath("../../../CanvasLayer2/ColorRect")
 
 [node name="Timer" type="Timer" parent="CanvasLayer/Dialogue Sprite/Text"]
 
 [node name="BriefDelay" type="Timer" parent="."]
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = 6
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -10.0
+offset_top = -11.0
+offset_right = 10.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [connection signal="dialogue_changed" from="CanvasLayer/Dialogue Sprite/Text" to="CanvasLayer/Dialogue Sprite/Portrait" method="_on_text_dialogue_changed"]
 [connection signal="timeout" from="CanvasLayer/Dialogue Sprite/Text/Timer" to="CanvasLayer/Dialogue Sprite/Text" method="_on_timer_timeout"]
