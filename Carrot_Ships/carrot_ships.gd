@@ -15,6 +15,9 @@ func  _physics_process(delta: float):
 	move_local_y(1)
 	move_local_x(randomX)
 	$AnimatedSprite2D.play("idel")
+	
+	if position.y > 1000:
+		self.queue_free()
 
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group("bullet"):
@@ -22,7 +25,7 @@ func _on_hit_box_area_entered(area: Area2D) -> void:
 		if carrot_health == 1:
 			damage_anim.visible = true
 			damage_anim.play('damage')
-		if carrot_health < 0:
+		if carrot_health <= 0:
 			alive = false
 			damage_anim.play('explode')
 

@@ -1,10 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://dyv2t2ufq2xks"]
+[gd_scene load_steps=26 format=3 uid="uid://dyv2t2ufq2xks"]
 
 [ext_resource type="Script" uid="uid://bsrpu2lusfc2h" path="res://Corn_Ships/corn_ships.gd" id="1_fkc6a"]
 [ext_resource type="Texture2D" uid="uid://b6y5i4sr220ei" path="res://Game_Asets/enemy_asets/Enemies-Sheet.webp" id="1_kysrq"]
 [ext_resource type="PackedScene" uid="uid://clpt8thxwk8da" path="res://enemy_bullet/enemy_bullet.tscn" id="2_p24ij"]
 [ext_resource type="PackedScene" uid="uid://bulqhelu1w6co" path="res://enemy_bullet_right/enemy_bullet_right.tscn" id="3_mrgwf"]
 [ext_resource type="PackedScene" uid="uid://7bjvcklggqtj" path="res://enemy_bullet_left/enemy_bullet_left.tscn" id="4_qb4ly"]
+[ext_resource type="Texture2D" uid="uid://b3nwqym3c38xb" path="res://Explosion-Sheet.png" id="6_6djdg"]
+[ext_resource type="Texture2D" uid="uid://dbo22dgruhmhs" path="res://ShipDamage-Sheet.png" id="7_tw3ff"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fkc6a"]
 size = Vector2(18, 39)
@@ -34,12 +36,115 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p24ij"]
 size = Vector2(30, 47)
 
-[node name="Corn_ships" type="CharacterBody2D"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_uqtiu"]
+atlas = ExtResource("6_6djdg")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kbpkr"]
+atlas = ExtResource("6_6djdg")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gac6h"]
+atlas = ExtResource("6_6djdg")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4p64l"]
+atlas = ExtResource("6_6djdg")
+region = Rect2(300, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n2mop"]
+atlas = ExtResource("6_6djdg")
+region = Rect2(400, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ud1dg"]
+atlas = ExtResource("6_6djdg")
+region = Rect2(500, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_av1jy"]
+atlas = ExtResource("7_tw3ff")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8h33t"]
+atlas = ExtResource("7_tw3ff")
+region = Rect2(50, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hg8ct"]
+atlas = ExtResource("7_tw3ff")
+region = Rect2(100, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lk83g"]
+atlas = ExtResource("7_tw3ff")
+region = Rect2(150, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2e6v"]
+atlas = ExtResource("7_tw3ff")
+region = Rect2(200, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yjurb"]
+atlas = ExtResource("7_tw3ff")
+region = Rect2(250, 0, 50, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hl26t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uqtiu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kbpkr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gac6h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4p64l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2mop")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ud1dg")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_av1jy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8h33t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hg8ct")
+}],
+"loop": true,
+"name": &"level1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lk83g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k2e6v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yjurb")
+}],
+"loop": true,
+"name": &"level2",
+"speed": 5.0
+}]
+
+[node name="Corn_ships" type="CharacterBody2D" node_paths=PackedStringArray("damaged_anim")]
 texture_filter = 1
 script = ExtResource("1_fkc6a")
 enemy_bullet_scene = ExtResource("2_p24ij")
 enemy_right_bullet_scene = ExtResource("3_mrgwf")
 enemy_left_bullet_scene = ExtResource("4_qb4ly")
+damaged_anim = NodePath("Damaged")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1.5)
@@ -60,5 +165,13 @@ shape = SubResource("RectangleShape2D_p24ij")
 [node name="ShootingTimer" type="Timer" parent="."]
 autostart = true
 
+[node name="Damaged" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_hl26t")
+animation = &"explode"
+frame = 5
+frame_progress = 1.0
+
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="timeout" from="ShootingTimer" to="." method="_on_shooting_timer_timeout"]
+[connection signal="animation_finished" from="Damaged" to="." method="_on_damaged_animation_finished"]

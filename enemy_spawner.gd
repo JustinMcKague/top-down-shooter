@@ -6,7 +6,8 @@ var enemy_dict: Dictionary
 
 var rng = RandomNumberGenerator.new()
 
-var spawn_positions = [Vector2(100, 0), Vector2(240, 0), Vector2(-100, 0)]
+var spawn_positions = [Vector2(80, 0), Vector2(240, 0), Vector2(400, 0)]
+
 
 func _ready() -> void:
 	enemy_dict = {
@@ -22,12 +23,12 @@ func _ready() -> void:
 func _on_spawn_time_reached(enemy: FlowManager.EnemySpawnInfo):
 	var enemy_inst = enemy_dict[enemy.type].instantiate()
 	self.add_child(enemy_inst)
-	enemy_inst.position = enemy.position
+	enemy_inst.global_position = enemy.position
 	
 func spawn_enemy(type: FlowManager.EnemyType, position: Vector2):
 	var enemy_inst = enemy_dict[type].instantiate()
 	self.add_child(enemy_inst)
-	enemy_inst.position = position
+	enemy_inst.global_position = position
 
 func _on_attack_signal(type: BossManager.BossAttack):
 	if type != BossManager.BossAttack.REINFORCE:
@@ -41,4 +42,5 @@ func select_random_enemy() -> int:
 	return random_index
 	
 func _on_boss_time():
-	spawn_enemy(FlowManager.EnemyType.BOSS, Vector2.ZERO + Vector2.DOWN * 100)
+	spawn_enemy(FlowManager.EnemyType.BOSS, Vector2(240, -100))
+	BossManager.boss_spawned.emit()

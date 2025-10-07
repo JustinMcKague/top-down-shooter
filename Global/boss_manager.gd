@@ -11,12 +11,25 @@ var time_elapsed = 0
 
 signal attack(attack_type: BossAttack)
 
-var alive: bool = true
+var alive: bool = false
 
 var boss_timer: Timer
-var timer_index: int = -1
+var timer_index: int = 0
+
+var phase_timer: Timer
+var phase_started: bool = false
+
+signal tween_ended
+signal boss_spawned
 
 func _ready() -> void:
+	phase_timer = Timer.new()
+	add_child(phase_timer)
+	phase_timer.wait_time = 4.0
+	phase_timer.one_shot = true
+	phase_timer.autostart = false
+	phase_timer.connect("timeout", _on_phase_timer_timeout)
+	
 	boss_timer = Timer.new()
 	add_child(boss_timer)
 	boss_timer.wait_time = 5.0
@@ -25,8 +38,15 @@ func _ready() -> void:
 	boss_timer.connect("timeout", _on_boss_timer_timeout)
 
 func _process(delta: float) -> void:
-	if FlowManager.increment_time and boss_timer.is_stopped():
+	if FlowManager.increment_time and boss_timer.is_stopped() and alive:
+		print("Why is this starting???" + str(FlowManager.increment_time))
 		boss_timer.start()
+
+func _on_phase_timer_timeout():
+	print("Dialogue should be appearing")
+	tween_ended.emit()
+	alive = true
+	
 
 func _on_boss_timer_timeout():
 	match timer_index:

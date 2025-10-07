@@ -21,8 +21,9 @@ signal final_enemy_spawned()
 var phase1: Array[EnemySpawnInfo]
 var phase2: Array[EnemySpawnInfo]
 
-var right_pos: Vector2 = Vector2(180, 0)
-var left_pos: Vector2 = Vector2(-180, 0)
+var right_pos: Vector2 = Vector2(380, 0)
+var middle_pos: Vector2 = Vector2(240, 0)
+var left_pos: Vector2 = Vector2(100, 0)
 
 var boss_data
 
@@ -41,35 +42,35 @@ func _ready() -> void:
 	global_timer.autostart = false
 	global_timer.connect("timeout", _on_global_timer_timeout)
 	phase1 = [
-		EnemySpawnInfo.new(EnemyType.CARROT, Vector2.ZERO),
+		EnemySpawnInfo.new(EnemyType.CARROT, middle_pos),
 		EnemySpawnInfo.new(EnemyType.CARROT, right_pos),
 		EnemySpawnInfo.new(EnemyType.CARROT, left_pos),
 		EnemySpawnInfo.new(EnemyType.CARROT, right_pos),
 		EnemySpawnInfo.new(EnemyType.CARROT, left_pos),
-		EnemySpawnInfo.new(EnemyType.CARROT, Vector2.ZERO),
-		EnemySpawnInfo.new(EnemyType.CARROT, Vector2.ZERO),
+		EnemySpawnInfo.new(EnemyType.CARROT, middle_pos),
+		EnemySpawnInfo.new(EnemyType.CARROT, middle_pos),
 		EnemySpawnInfo.new(EnemyType.CARROT, left_pos),
 		EnemySpawnInfo.new(EnemyType.RADISH, left_pos),
-		EnemySpawnInfo.new(EnemyType.CARROT, Vector2.ZERO),
+		EnemySpawnInfo.new(EnemyType.CARROT, middle_pos),
 		EnemySpawnInfo.new(EnemyType.RADISH, right_pos),
 		EnemySpawnInfo.new(EnemyType.RADISH, left_pos),
 		EnemySpawnInfo.new(EnemyType.RADISH, right_pos)
 	]
 	phase2 = [
-		EnemySpawnInfo.new(EnemyType.CORN, Vector2.ZERO),
+		EnemySpawnInfo.new(EnemyType.CORN, middle_pos),
 		EnemySpawnInfo.new(EnemyType.CARROT, right_pos),
 		EnemySpawnInfo.new(EnemyType.CARROT, left_pos),
 		EnemySpawnInfo.new(EnemyType.CORN, right_pos),
 		EnemySpawnInfo.new(EnemyType.CORN, left_pos),
-		EnemySpawnInfo.new(EnemyType.CARROT, Vector2.ZERO),
+		EnemySpawnInfo.new(EnemyType.CARROT, middle_pos),
 		EnemySpawnInfo.new(EnemyType.RADISH, left_pos),
 		EnemySpawnInfo.new(EnemyType.RADISH, right_pos),
-		EnemySpawnInfo.new(EnemyType.RADISH, Vector2.ZERO),
+		EnemySpawnInfo.new(EnemyType.RADISH, middle_pos),
 		EnemySpawnInfo.new(EnemyType.CARROT, right_pos),
 		EnemySpawnInfo.new(EnemyType.CORN, right_pos),
-		EnemySpawnInfo.new(EnemyType.CORN, Vector2.ZERO),
+		EnemySpawnInfo.new(EnemyType.CORN, middle_pos),
 		EnemySpawnInfo.new(EnemyType.CARROT, left_pos),
-		EnemySpawnInfo.new(EnemyType.RADISH, Vector2.ZERO),
+		EnemySpawnInfo.new(EnemyType.RADISH, middle_pos),
 		EnemySpawnInfo.new(EnemyType.RADISH, left_pos)
 	]
 	boss_data = EnemySpawnInfo.new(EnemyType.BOSS, Vector2.ZERO)

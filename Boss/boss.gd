@@ -5,26 +5,51 @@ extends CharacterBody2D
 
 var boss_max_health = 50
 
+@export var explosions: Array[AnimatedSprite2D]
+@export var explosions_parent: Node2D
+
+@export var death_timer: Timer
+
+@export var final_pos: Vector2
+
+func _ready() -> void:
+	FlowManager.increment_time = false
+	$HitBox.monitoring = false
+	var tween = get_tree().create_tween()
+	tween.tween_property(self, "global_position", final_pos, 4)
+	explosions_parent.visible = false
+	BossManager.tween_ended.connect(_on_tween_ended)
+	BossManager.boss_spawned.connect(_on_boss_spawn)
+
+func _on_boss_spawn():
+	BossManager.phase_timer.start()
+
+func _on_tween_ended():
+	$HitBox.monitoring = true
+
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group('bullet'):
 		boss_health -= 1
 		check_health_threshold()
 
 func check_health_threshold():
-	if boss_health <= boss_max_health * 0.75 and boss_health > boss_max_health * 0.5:
+	if boss_health <= (boss_max_health * 0.75) and boss_health > (boss_max_health * 0.5):
 		damaged_anim.visible = true
 		damaged_anim.play('level1')
-	elif boss_health <= boss_max_health * 0.5 and boss_health > boss_max_health * 0.25:
+	if boss_health <= boss_max_health * 0.5 and boss_health > boss_max_health * 0.25:
 		damaged_anim.play('level2')
-	elif boss_health <= boss_max_health * 0.25:
+	if boss_health <= boss_max_health * 0.25:
 		damaged_anim.play('level3')
-	elif boss_health <= 0:
+	if boss_health <= 0:
+		print('boss is dead')
 		BossManager.alive = false
 		explode()
 		
 func explode():
-	$DeathDelay.start()
-	# Spawn a bunch of little explosions and then destroy the game object
+	death_timer.start()
+	explosions_parent.visible = true
+	for i in explosions.size():
+		explosions[i].play('explosion')
 
 func _on_death_delay_timeout() -> void:
 	self.queue_free()

@@ -15,6 +15,7 @@ var current_dialogue_type
 var random_int
 
 @export var brief_timer: Timer
+@export var blackout: ColorRect
 
 func _ready() -> void:
 	visible_characters = 0
@@ -23,7 +24,7 @@ func _ready() -> void:
 	load_dialogue(DialogueGlobal.DialogueType.Preamble)
 	generate_random_index()
 	PlayerVariables.player_death.connect(load_dialogue)
-	FlowManager.final_enemy_spawned.connect(_on_boss_time)
+	BossManager.tween_ended.connect(_on_boss_time)
 
 func generate_random_index() -> int: # Call this function on game restart
 	random_int = randi_range(0, DialogueGlobal.dialogue_dicts[DialogueGlobal.DialogueType.Death].size() - 1)
@@ -38,7 +39,6 @@ func show_dialogue_box():
 	$Timer.start()
 	
 func load_dialogue(diaType): # Call this function on Game Start and when the player reaches the boss battle
-	BossManager.boss_timer.stop()
 	current_dialogue_type = diaType
 	current_char = 0
 	lines.clear()
@@ -62,7 +62,6 @@ func load_dialogue(diaType): # Call this function on Game Start and when the pla
 		display_dialogue()
 
 func display_dialogue(): 
-	BossManager.boss_timer.stop()
 	show_dialogue_box()
 	dialogue_changed.emit(DialogueGlobal.get_character_name(current_dialogue_type, current_line))
 	text = lines[current_line].text
@@ -101,6 +100,8 @@ func _input(event: InputEvent) -> void: # This function will be put inside a sig
 						FlowManager.increment_time = false
 						PlayerVariables.can_fire = false
 						brief_timer.start()
+						var tween = get_tree().create_tween()
+						tween.tween_property(blackout, "modulate:a", 0, 1.5)
 						Global.brief_starting.emit()
 				else:
 					$Timer.start()
@@ -125,5 +126,4 @@ func _on_brief_delay_timeout() -> void:
 	brief_timer.stop()
 	
 func _on_boss_time():
-	BossManager.boss_timer.stop()
 	load_dialogue(DialogueGlobal.DialogueType.Boss)
