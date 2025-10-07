@@ -1,0 +1,83 @@
+[gd_scene load_steps=8 format=3 uid="uid://bkhmfof4muqs6"]
+
+[ext_resource type="Script" path="res://MainMenu/main_menu.gd" id="1_gmjeq"]
+[ext_resource type="Texture2D" path="res://MainMenu/TitleScreen-Sheet.webp" id="2_osowc"]
+[ext_resource type="AudioStream" path="res://MainMenu/Music_Menu (placeholder).wav" id="3_ha25l"]
+
+[sub_resource type="Animation" id="Animation_5de1l"]
+resource_name = "idel"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.03333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ajn5b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_po2gx"]
+resource_name = "start_anim"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0666667, 1.76667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_po2gx"]
+_data = {
+&"RESET": SubResource("Animation_ajn5b"),
+&"idel": SubResource("Animation_5de1l"),
+&"start_anim": SubResource("Animation_po2gx")
+}
+
+[node name="main_menu" type="Node2D"]
+script = ExtResource("1_gmjeq")
+
+[node name="TitleScreen-sheet" type="Sprite2D" parent="."]
+position = Vector2(240, 320)
+texture = ExtResource("2_osowc")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_ha25l")
+autoplay = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_po2gx")
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -4.0
+offset_top = -22.0
+offset_right = 503.0
+offset_bottom = 659.0
+color = Color(0, 0, 0, 0)
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
