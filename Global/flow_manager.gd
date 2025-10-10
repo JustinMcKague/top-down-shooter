@@ -78,8 +78,8 @@ func _ready() -> void:
 
 func _on_restart():
 	timer_index = 0
-	global_timer.wait_time = 5.0
 	global_timer.stop()
+	global_timer.wait_time = 5.0
 
 func _process(delta: float) -> void:
 	if increment_time and global_timer.is_stopped():
@@ -88,6 +88,7 @@ func _process(delta: float) -> void:
 func _on_global_timer_timeout():
 	match timer_index:
 		0:
+			PlayerVariables.read_preamble = true
 			enemy_spawn_time.emit(phase1[0])
 			global_timer.wait_time = 4.0
 			global_timer.start()
@@ -172,5 +173,6 @@ func _on_global_timer_timeout():
 			global_timer.start()
 		18:
 			enemy_spawn_time.emit(phase2[14])
-			final_enemy_spawned.emit()
+			if Global.playerHealth > 0:
+				final_enemy_spawned.emit()
 	timer_index += 1

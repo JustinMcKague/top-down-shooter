@@ -22,11 +22,13 @@ func _on_hit_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group("bullet") or area.is_in_group('player'):
 		$HideTimer.start()
 		damaged_anim.visible = true
-		$HitBox.monitoring = false
-		$HitBox.monitorable = false
+		$CollisionShape2D.set_deferred("disabled", true)
+		$HitBox/CollisionShape2D.set_deferred("disabled", true)
 		if drop_chance():
 			drop_energy()
 		damaged_anim.play('explode')
+		$"Explosion Sound".pitch_scale = randi_range(0.5, 1.5)
+		$"Explosion Sound".play()
 
 func drop_chance() -> bool:
 	var drop = rng.randf_range(0, 1)

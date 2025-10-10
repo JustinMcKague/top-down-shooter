@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cw0nh000dvxkk"]
+[gd_scene load_steps=37 format=3 uid="uid://cw0nh000dvxkk"]
 
 [ext_resource type="Texture2D" uid="uid://ceepyp48rfoas" path="res://Game_Asets/Boss-Sheet.webp" id="1_2mdct"]
 [ext_resource type="Script" uid="uid://ckww1cciujee4" path="res://Boss/boss.gd" id="1_7ba5a"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cbjdi8dhp04vn" path="res://Boss/Boss Attacks/Wave/missile.tscn" id="8_ju3tf"]
 [ext_resource type="Texture2D" uid="uid://pj5l5sshtcaj" path="res://Boss/Boss Damage/BossDamage-Sheet.png" id="9_ntee4"]
 [ext_resource type="Texture2D" uid="uid://b3nwqym3c38xb" path="res://Explosion-Sheet.png" id="10_sri3m"]
+[ext_resource type="AudioStream" uid="uid://5ygswsj34o4a" path="res://SFX/Explosion.wav" id="11_2j6g7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2mdct"]
 radius = 247.025
@@ -35,6 +36,43 @@ animations = [{
 "name": &"idel",
 "speed": 5.0
 }]
+
+[sub_resource type="Animation" id="Animation_sri3m"]
+resource_name = "death"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.14, 0.173333, 0.206667, 0.24, 0.273333, 0.29, 0.323333, 0.356667, 0.39, 0.42, 0.423333, 0.453333, 0.486667, 0.52, 0.55, 0.553333, 0.583333, 0.616667, 0.65, 0.67, 0.683333, 0.703333, 0.736667, 0.77, 0.8, 0.803333, 0.833333, 0.866667, 0.9, 0.933333, 0.96, 0.993333, 1.02667, 1.06, 1.09333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-2, -113), Vector2(-21, -107), Vector2(8, -96), Vector2(-15, -104), Vector2(4, -110), Vector2(-2, -113), Vector2(-21, -107), Vector2(8, -96), Vector2(-15, -104), Vector2(4, -110), Vector2(-2, -113), Vector2(-21, -107), Vector2(8, -96), Vector2(-15, -104), Vector2(-2, -113), Vector2(4, -110), Vector2(-21, -107), Vector2(8, -96), Vector2(-15, -104), Vector2(-2, -113), Vector2(4, -110), Vector2(-21, -107), Vector2(8, -96), Vector2(-15, -104), Vector2(-2, -113), Vector2(4, -110), Vector2(-21, -107), Vector2(8, -96), Vector2(-15, -104), Vector2(-2, -113), Vector2(4, -110), Vector2(-21, -107), Vector2(8, -96), Vector2(-15, -104), Vector2(4, -110), Vector2(-2, -113), Vector2(-21, -107), Vector2(8, -96), Vector2(-15, -104), Vector2(4, -110)]
+}
+
+[sub_resource type="Animation" id="Animation_2j6g7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-21, -107)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_myhfd"]
+_data = {
+&"RESET": SubResource("Animation_2j6g7"),
+&"death": SubResource("Animation_sri3m")
+}
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mk3vo"]
 radius = 247.0
@@ -172,6 +210,7 @@ animations = [{
 
 [node name="Boss" type="CharacterBody2D" node_paths=PackedStringArray("damaged_anim", "explosions", "explosions_parent", "death_timer")]
 texture_filter = 1
+position = Vector2(23, 0)
 collision_layer = 12
 script = ExtResource("1_7ba5a")
 boss_health = 125
@@ -183,22 +222,26 @@ final_pos = Vector2(240, 150)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2(-1, -146)
+position = Vector2(-1, -156)
 shape = SubResource("CircleShape2D_2mdct")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(3, -139)
+position = Vector2(-21, -107)
 scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_mrrbl")
 animation = &"idel"
 autoplay = "idel"
-frame_progress = 0.500742
 
-[node name="HitBox" type="Area2D" parent="."]
-visible = false
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_myhfd")
+}
+
+[node name="HitBox" type="Area2D" parent="." groups=["enemy"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" groups=["enemy"]]
-position = Vector2(4, -152)
+visible = false
+position = Vector2(-1, -158)
 shape = SubResource("CircleShape2D_mk3vo")
 
 [node name="Projectile Spray" type="Node2D" parent="." node_paths=PackedStringArray("emitters")]
@@ -240,8 +283,7 @@ missile = ExtResource("8_ju3tf")
 wait_time = 0.25
 
 [node name="DeathDelay" type="Timer" parent="."]
-wait_time = 5.0
-one_shot = true
+wait_time = 3.0
 
 [node name="Damaged" type="AnimatedSprite2D" parent="."]
 visible = false
@@ -285,8 +327,17 @@ sprite_frames = SubResource("SpriteFrames_q4fyr")
 animation = &"explosion"
 frame_progress = 0.936479
 
+[node name="Explosion Sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_2j6g7")
+volume_db = -14.0
+max_polyphony = 5
+
+[node name="timeperexplode" type="Timer" parent="Explosion Sound"]
+wait_time = 0.5
+
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="timeout" from="Projectile Spray/Delay" to="Projectile Spray" method="_on_delay_timeout"]
 [connection signal="timeout" from="Laser Beam/Delay" to="Laser Beam" method="_on_delay_timeout"]
 [connection signal="timeout" from="Wave Emitter/Delay" to="Wave Emitter" method="_on_delay_timeout"]
 [connection signal="timeout" from="DeathDelay" to="." method="_on_death_delay_timeout"]
+[connection signal="timeout" from="Explosion Sound/timeperexplode" to="." method="_on_timeperexplode_timeout"]

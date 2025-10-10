@@ -10,11 +10,11 @@ size = Vector2(3, 6)
 atlas = ExtResource("1_ldsqc")
 region = Rect2(0, 0, 10, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_iwunx"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_12gia"]
 atlas = ExtResource("1_ldsqc")
 region = Rect2(10, 0, 10, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5bfdr"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_iwunx"]
 atlas = ExtResource("1_ldsqc")
 region = Rect2(20, 0, 10, 16)
 
@@ -23,15 +23,20 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_onr2b")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_iwunx")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5bfdr")
 }],
 "loop": true,
 "name": &"idel",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_12gia")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iwunx")
+}],
+"loop": false,
+"name": &"impact",
 "speed": 5.0
 }]
 
@@ -48,9 +53,8 @@ shape = SubResource("RectangleShape2D_12gia")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_k8ggt")
-animation = &"idel"
+animation = &"impact"
 autoplay = "idel"
-frame_progress = 0.138229
 flip_h = true
 
 [node name="HitBox" type="Area2D" parent="." groups=["enemy_bullet"]]
@@ -59,4 +63,5 @@ flip_h = true
 position = Vector2(1, 1.5)
 shape = SubResource("RectangleShape2D_itird")
 
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]

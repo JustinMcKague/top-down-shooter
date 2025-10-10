@@ -69,6 +69,8 @@ func load_dialogue(diaType): # Call this function on Game Start and when the pla
 
 func display_dialogue(): 
 	show_dialogue_box()
+	$AudioStreamPlayer2D.pitch_scale = randi_range(0.9, 1.2)
+	$AudioStreamPlayer2D.play()
 	dialogue_changed.emit(DialogueGlobal.get_character_name(current_dialogue_type, current_line))
 	text = lines[current_line].text
 	total_chars = lines[current_line].text.length()
@@ -106,12 +108,15 @@ func _input(event: InputEvent) -> void: # This function will be put inside a sig
 						FlowManager.increment_time = false
 						PlayerVariables.can_fire = false
 						brief_timer.start()
-						var tween = get_tree().create_tween()
-						tween.tween_property(blackout, "modulate:a", 0, 1.5)
+						fade()
 						Global.brief_starting.emit()
 				else:
 					$Timer.start()
 					display_dialogue()
+
+func fade():
+	var tween = get_tree().create_tween()
+	tween.tween_property(blackout, "modulate:a", 0, 1.5)
 
 func hide_dialogue_box():
 	dialogue_box.visible = false

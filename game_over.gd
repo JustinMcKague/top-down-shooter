@@ -29,8 +29,10 @@ func _process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed('shoot') && Global.playerHealth <= 0:
 		hide_all()
+		PlayerVariables.restart.emit()
 
 func hide_all():
 	get_tree().reload_current_scene()
-	Global.playerHealth = 5
+	Global.playerHealth = 10
 	visible = false
+	PlayerVariables.batteryCharge = 100
