@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://cbjdi8dhp04vn"]
+[gd_scene load_steps=11 format=3 uid="uid://cbjdi8dhp04vn"]
 
 [ext_resource type="Script" uid="uid://cyexjfh14el1p" path="res://missile.gd" id="1_nic6b"]
 [ext_resource type="Texture2D" uid="uid://bur6pnebby706" path="res://Boss/Boss Attacks/Wave/ProjectilesBoss_missile-Sheet.png" id="2_fbvqo"]
+[ext_resource type="AudioStream" uid="uid://5ygswsj34o4a" path="res://SFX/Explosion.wav" id="3_fbvqo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u33t5"]
 size = Vector2(14, 19)
@@ -57,9 +58,9 @@ animations = [{
 [node name="Missile" type="Node2D" groups=["enemy_bullet"]]
 script = ExtResource("1_nic6b")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." groups=["enemy_bullet"]]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" groups=["enemy_bullet"]]
 position = Vector2(-1, 3.5)
 shape = SubResource("RectangleShape2D_u33t5")
 
@@ -68,6 +69,9 @@ sprite_frames = SubResource("SpriteFrames_k56r7")
 
 [node name="Timeout" type="Timer" parent="."]
 wait_time = 5.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_fbvqo")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

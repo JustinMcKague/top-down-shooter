@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://xbx6ps0eris1"]
+[gd_scene load_steps=23 format=3 uid="uid://xbx6ps0eris1"]
 
 [ext_resource type="Texture2D" uid="uid://b6y5i4sr220ei" path="res://Game_Asets/enemy_asets/Enemies-Sheet.webp" id="1_1h0tm"]
 [ext_resource type="Script" uid="uid://dxm03604w5btq" path="res://Carrot_Ships/carrot_ships.gd" id="1_ceyc7"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://heojovg7fkl8" path="res://energy.tscn" id="3_yugrq"]
 [ext_resource type="Texture2D" uid="uid://dbo22dgruhmhs" path="res://ShipDamage-Sheet.png" id="4_53b0b"]
 [ext_resource type="Texture2D" uid="uid://b3nwqym3c38xb" path="res://Explosion-Sheet.png" id="5_yugrq"]
+[ext_resource type="AudioStream" uid="uid://5ygswsj34o4a" path="res://SFX/Explosion.wav" id="7_8vqgc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ceyc7"]
 size = Vector2(22, 44)
@@ -144,6 +145,10 @@ animation = &"explode"
 
 [node name="HideTimer" type="Timer" parent="."]
 wait_time = 0.25
+
+[node name="Explosion Sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_8vqgc")
+volume_db = -14.0
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

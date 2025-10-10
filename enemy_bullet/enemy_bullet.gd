@@ -1,9 +1,14 @@
 extends Area2D
 
+func _ready() -> void:
+	$AudioStreamPlayer2D.pitch_scale = randi_range(0.5, 1.5)
+
 func _process(delta: float) -> void:
 	move_local_y(3)
 
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group('player'):
-		self.queue_free()
-	
+		$AnimatedSprite2D.play('impact')
+		
+func _on_animated_sprite_2d_animation_finished() -> void:
+	self.queue_free()

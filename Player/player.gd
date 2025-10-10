@@ -12,6 +12,8 @@ var screen_size: Vector2
 
 var sprite: AnimatedSprite2D
 
+var max_health = 10
+
 func _ready() -> void:
 	$AnimatedSprite2D.play('warmup')
 	sprite = $AnimatedSprite2D
@@ -22,9 +24,6 @@ func _on_brief_starting():
 	position.move_toward(position + Vector2.UP * 50, 10)
 
 func _physics_process(delta: float) -> void:
-	
-	
-	#self.move_local_y(0.5)
 	if PlayerVariables.can_fire:
 		var direction := Input.get_axis("left", "right")
 		if direction: 
@@ -43,13 +42,16 @@ func _physics_process(delta: float) -> void:
 
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemy_bullet") and alive:
-		Global.playerHealth -= 1
-		var tween = create_tween()
-		tween.tween_property(sprite, "modulate", Color.RED, 0.15)
-		tween.tween_property(sprite, "modulate", Color.WHITE, 0.15)
-		check_health()
+		if FlowManager.increment_time:
+			$"Damage Sound".play()
+			Global.playerHealth -= 1
+			var tween = create_tween()
+			tween.tween_property(sprite, "modulate", Color.RED, 0.15)
+			tween.tween_property(sprite, "modulate", Color.WHITE, 0.15)
+			check_health()
 	if area.is_in_group('energy'):
 		PlayerVariables.batteryCharge += 25
+		$"pickup sound".play()
 		if PlayerVariables.batteryCharge > 100:
 			PlayerVariables.batteryCharge = 100
 	if area.is_in_group('enemy'):
@@ -59,10 +61,10 @@ func _on_hit_box_area_entered(area: Area2D) -> void:
 		move_and_slide()
 
 func check_health():
-	if Global.playerHealth <= 3 and Global.playerHealth > 1:
+	if Global.playerHealth <= max_health * 0.5 and Global.playerHealth > max_health * 0.25:
 		damage_anim.visible = true
 		damage_anim.play('level1')
-	elif Global.playerHealth == 1:
+	elif Global.playerHealth <= max_health * 0.25:
 		damage_anim.play('level2')
 	if Global.playerHealth <= 0:
 		alive = false

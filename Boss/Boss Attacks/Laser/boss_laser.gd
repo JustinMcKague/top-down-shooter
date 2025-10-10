@@ -8,12 +8,12 @@ func _ready() -> void:
 	hit_box = $HitBox
 	$Timer.start()
 	anim.play('warming')
-	hit_box.monitorable = false
+	$HitBox/CollisionShape2D.disabled = true
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	anim.play('laser')
-	hit_box.monitorable = true
+	$HitBox/CollisionShape2D.disabled = false
 
 
 func _on_timer_timeout() -> void:

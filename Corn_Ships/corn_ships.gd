@@ -38,9 +38,10 @@ func _on_hit_box_area_entered(area: Area2D) -> void:
 		
 	if corn_health <= 0:
 		$HideTimer.start()
-		$HitBox.monitoring = false
-		$HitBox.monitorable = false
+		$HitBox/CollisionShape2D.disabled = true
 		damaged_anim.play('explode')
+		$"Explosion Sound".pitch_scale = randi_range(0.5, 1.5)
+		$"Explosion Sound".play()
 		if drop_chance():
 			drop_energy()
 
@@ -57,15 +58,16 @@ func drop_energy():
 	energy_inst.global_position = global_position
 
 func _on_shooting_timer_timeout() -> void:
+	if corn_health > 0:
 		var bullet = enemy_bullet_scene.instantiate()
 		get_tree().current_scene.add_child(bullet)
-		bullet.position = position + Vector2(0, 26)
+		bullet.global_position = global_position + Vector2(0, 26)
 		var right_bullet = enemy_right_bullet_scene.instantiate()
 		get_tree().current_scene.add_child(right_bullet)
-		right_bullet.position = position + Vector2(0, 26)
+		right_bullet.global_position = global_position + Vector2(0, 26)
 		var leftbullet = enemy_left_bullet_scene.instantiate()
 		get_tree().current_scene.add_child(leftbullet)
-		leftbullet.position = position + Vector2(0, 26)
+		leftbullet.global_position = global_position + Vector2(0, 26)
 
 
 func _on_damaged_animation_finished() -> void:

@@ -9,6 +9,7 @@ func _ready() -> void:
 	
 func _on_boss_spawn():
 	self.stream = boss_music
+	self.play()
 
 func _on_restart():
 	self.stream = standard_music

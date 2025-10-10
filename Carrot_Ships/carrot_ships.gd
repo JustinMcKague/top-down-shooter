@@ -6,7 +6,9 @@ extends CharacterBody2D
 
 var carrot_health = 2
 var rng = RandomNumberGenerator.new()
-var randomX = rng.randi_range(-1, 1)
+var randomX = [-1, 1].pick_random()
+
+var x_speed = 1.5
 
 var alive: bool = true
 
@@ -14,12 +16,19 @@ var alive: bool = true
 
 var sprite: AnimatedSprite2D
 
+var screen_size
+
 func _ready() -> void:
 	sprite = $AnimatedSprite2D
-
+	screen_size = get_viewport_rect().size
+	
 func  _physics_process(delta: float):
-	move_local_y(1)
-	move_local_x(randomX)
+	move_local_y(0.25)
+	move_local_x(randomX * x_speed)
+	if position.x < 0:
+		randomX = 1
+	if position.x > screen_size.x:
+		randomX = -1
 	$AnimatedSprite2D.play("idel")
 	
 	if position.y > 1000:
@@ -39,9 +48,10 @@ func _on_hit_box_area_entered(area: Area2D) -> void:
 		if carrot_health <= 0:
 			$HideTimer.start()
 			alive = false
-			$HitBox.monitoring = false
-			$HitBox.monitorable = false
+			$HitBox/CollisionShape2D.set_deferred("disabled", true)
 			damage_anim.play('explode')
+			$"Explosion Sound".pitch_scale = randi_range(0.5, 1.5)
+			$"Explosion Sound".play()
 			if drop_chance():
 				drop_energy()
 
@@ -61,7 +71,7 @@ func _on_shoot_timer_timeout() -> void:
 	if alive:
 		var bullet = enemy_bullet_scene.instantiate()
 		get_tree().current_scene.add_child(bullet)
-		bullet.position = position + Vector2(0, 26)
+		bullet.global_position = global_position + Vector2(0, 26)
 		
 func _on_animated_sprite_2d_2_animation_finished() -> void:
 	self.queue_free()

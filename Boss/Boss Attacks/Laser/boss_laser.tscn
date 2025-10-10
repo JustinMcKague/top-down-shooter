@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://coas4vpmfcaqr"]
+[gd_scene load_steps=12 format=3 uid="uid://coas4vpmfcaqr"]
 
 [ext_resource type="Script" uid="uid://xkoek42dvitj" path="res://Boss/Boss Attacks/Laser/boss_laser.gd" id="1_e5gvd"]
 [ext_resource type="Texture2D" uid="uid://c1mq5gkile05a" path="res://Boss/Boss Attacks/Laser/ProjectilesBoss_laserBeam-Sheet.png" id="2_fhoex"]
+[ext_resource type="AudioStream" uid="uid://5rgreyqoq6vu" path="res://SFX/Boss Laser Attack.wav" id="3_e5gvd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xll6h"]
 size = Vector2(110, 641)
@@ -65,9 +66,9 @@ animations = [{
 position = Vector2(0, 320)
 script = ExtResource("1_e5gvd")
 
-[node name="HitBox" type="Area2D" parent="."]
+[node name="HitBox" type="Area2D" parent="." groups=["enemy_bullet"]]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" groups=["enemy_bullet"]]
 position = Vector2(-1, 1.5)
 shape = SubResource("RectangleShape2D_xll6h")
 
@@ -77,6 +78,10 @@ animation = &"laser"
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_e5gvd")
+autoplay = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

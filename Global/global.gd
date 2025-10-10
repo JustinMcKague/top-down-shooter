@@ -1,6 +1,6 @@
 extends Node
 
-var playerHealth = 5
+var playerHealth = 10
 
 var attempt = 1
 

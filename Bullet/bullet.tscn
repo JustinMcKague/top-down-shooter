@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://c7ln0antdfype"]
+[gd_scene load_steps=10 format=3 uid="uid://c7ln0antdfype"]
 
 [ext_resource type="Script" uid="uid://8kqdxslxql3m" path="res://Bullet/bullet.gd" id="1_4qwpv"]
 [ext_resource type="Texture2D" uid="uid://cq7dwb072cg75" path="res://Game_Asets/bulletsArt/Projectiles_standard-Sheet.webp" id="2_4qwpv"]
+[ext_resource type="AudioStream" uid="uid://n2i4gw4ok4i4" path="res://SFX/Shooting_Standard.wav" id="3_6rx1x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4qwpv"]
 size = Vector2(12.9267, 15)
@@ -13,11 +14,11 @@ size = Vector2(8, 11)
 atlas = ExtResource("2_4qwpv")
 region = Rect2(0, 0, 11, 17)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lw5a6"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_4qwpv"]
 atlas = ExtResource("2_4qwpv")
 region = Rect2(11, 0, 11, 17)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vlmcq"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_lw5a6"]
 atlas = ExtResource("2_4qwpv")
 region = Rect2(22, 0, 11, 17)
 
@@ -26,15 +27,20 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6rx1x")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lw5a6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vlmcq")
 }],
 "loop": true,
 "name": &"idel",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4qwpv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lw5a6")
+}],
+"loop": false,
+"name": &"impact",
 "speed": 5.0
 }]
 
@@ -57,13 +63,18 @@ shape = SubResource("RectangleShape2D_6rx1x")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_co2il")
-animation = &"idel"
+animation = &"impact"
 autoplay = "idel"
-frame_progress = 0.518481
 
 [node name="Expire" type="Timer" parent="."]
 wait_time = 5.0
 autostart = true
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_6rx1x")
+volume_db = -8.0
+autoplay = true
+
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="Expire" to="." method="_on_expire_timeout"]

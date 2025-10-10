@@ -6,7 +6,7 @@ var enemy_dict: Dictionary
 
 var rng = RandomNumberGenerator.new()
 
-var spawn_positions = [Vector2(80, 0), Vector2(240, 0), Vector2(400, 0)]
+var spawn_positions = [Vector2(100, 0), Vector2(240, 0), Vector2(380, 0)]
 
 
 func _ready() -> void:
@@ -23,7 +23,6 @@ func _ready() -> void:
 
 func _on_restart():
 	for n in get_children():
-		remove_child(n)
 		n.queue_free()
 
 func _on_spawn_time_reached(enemy: FlowManager.EnemySpawnInfo):

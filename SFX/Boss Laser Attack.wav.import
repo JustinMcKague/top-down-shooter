@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://5rgreyqoq6vu"
+path="res://.godot/imported/Boss Laser Attack.wav-88ac576a822dd16fee8b9fb87eb9bb0e.sample"
+
+[deps]
+
+source_file="res://SFX/Boss Laser Attack.wav"
+dest_files=["res://.godot/imported/Boss Laser Attack.wav-88ac576a822dd16fee8b9fb87eb9bb0e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
